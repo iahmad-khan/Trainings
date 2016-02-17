@@ -1,7 +1,9 @@
 # Trainings
 
 redhat
+
 puppet
+
 git
 github
 jenkins
