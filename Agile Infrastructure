@@ -1,0 +1,63 @@
+
+Operating Systems:
+
+   Obuntu Linux
+   Redhat/Centos Linux
+   Oracle Linux
+   Oracle Solaris
+   Windows server 2008/2012
+   
+Virtualization:
+
+   Docker and Containers
+   Vmware ESXi 
+   KVM
+   Virtual Box
+
+Cloud Deployments:
+
+  Openstack
+  Amazon AWS , EC2
+
+Configuration Management:
+
+  Puppet with Foreman
+  Hiera
+  R10k
+  Liberarian Puppet
+  Mcollective
+
+Scripting:
+
+  Bash shell scripting
+  Python scripting for system admins
+
+Version Control:
+  Git
+  Github
+  Gitlab
+
+Data:
+
+  MySQL
+  ElasticSearch
+  Kibana
+
+Continous Integration:
+
+  Jenkins , Groovy scripting
+  
+Code Review:
+
+  Github , Gitlab , Pull request model
+  Gerrit code review tool
+
+Integrations:
+
+  Puppet with Foreman
+  Puppet , Foreman with Git , Github
+  Puppet , Foreman , Git , with Openstack
+  Jenkins with Git, Github , Gerrit
+  Command line tools with managing puppet based vms in Openstack. 
+  
+ 
