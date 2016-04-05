@@ -1,0 +1,121 @@
+1. While logged in as the 'testuser' in MySQL, using the 'dbTest' database created earlier.
+
+    [root@linuxacademy:~]# mysql -u testuser -p -h localhost dbTest
+
+    mysql>
+
+     
+
+2. Select all the records in the Vendors Table and sort them alphabetically on the Vendor's Name.
+
+    mysql> SELECT * FROM tblVendors ORDER BY vendorName;
+
+    +----------+-------------+
+
+    | vendorID | vendorName  |
+
+    +----------+-------------+
+
+    |        1 | IBM         |
+
+    |        6 | LG          |
+
+    |        2 | Oracle      |
+
+    |        8 | Panasonic   |
+
+    |        7 | Sony        |
+
+    |        5 | Time Warner |
+
+    |        3 | Verizon     |
+
+    |        4 | Walmart     |
+
+    +----------+-------------+
+
+    8 rows in set (0.00 sec)
+
+ 
+
+3. Select all the records in the Vendors Table and sort them reverse numerically on the Vendor's ID.
+
+     mysql> SELECT * FROM tblVendors ORDER BY vendorID DESC;
+
+    +----------+-------------+
+
+    | vendorID | vendorName  |
+
+    +----------+-------------+
+
+    |        8 | Panasonic   |
+
+    |        7 | Sony        |
+
+    |        6 | LG          |
+
+    |        5 | Time Warner |
+
+    |        4 | Walmart     |
+
+    |        3 | Verizon     |
+
+    |        2 | Oracle      |
+
+    |        1 | IBM         |
+
+    +----------+-------------+
+
+    8 rows in set (0.00 sec)
+
+ 
+
+4. Select all orders in the Orders table after January 1st, 2012 and order by the date.
+
+    mysql> SELECT * FROM tblOrders WHERE orderDate > '2012-01-01' ORDER BY orderDate;
+
+    +---------+---------------+------------+
+
+    | orderID | orderVendorID | orderDate  |
+
+    +---------+---------------+------------+
+
+    |       5 |             1 | 2012-07-12 |
+
+    |       8 |             5 | 2014-09-19 |
+
+    +---------+---------------+------------+
+
+    2 rows in set (0.00 sec)
+
+ 
+
+5. Write two queries, one that will provide the minimum Vendor ID in the Vendor's Table and one that will provide the maximum Order ID in the Order's table.
+
+     mysql> SELECT MIN(vendorID) FROM tblVendors;
+
+    +---------------+
+
+    | MIN(vendorID) |
+
+    +---------------+
+
+    |             1 |
+
+    +---------------+
+
+    1 row in set (0.00 sec)
+
+    mysql> SELECT MAX(orderID) FROM tblOrders;
+
+    +--------------+
+
+    | MAX(orderID) |
+
+    +--------------+
+
+    |            8 |
+
+    +--------------+
+
+    1 row in set (0.00 sec)
