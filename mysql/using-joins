@@ -1,0 +1,99 @@
+1. Log into the MySQL databases instance called 'dbTest' with the user id 'testuser' that has been previously provisioned in our exercises.
+
+    [root@linuxacademy:~]# mysql -u testuser -p -h localhost dbTest
+
+    mysql>
+
+2. Using an 'inner join', return all rows from the Vendors and Orders table where there is a matching Vendor ID value in BOTH the Vendors and Orders tables.
+
+    mysql> SELECT tblVendors.vendorID,tblVendors.vendorName,tblOrders.orderDate FROM tblVendors INNER JOIN tblOrders ON tblVendors.vendorID = tblOrders.orderVendorID;
+
+    +----------+-------------+------------+
+
+    | vendorID | vendorName  | orderDate  |
+
+    +----------+-------------+------------+
+
+    |        8 | Panasonic   | 2011-07-12 |
+
+    |        6 | LG          | 2011-08-12 |
+
+    |        7 | Sony        | 2011-09-12 |
+
+    |        3 | Verizon     | 2011-01-12 |
+
+    |        1 | IBM         | 2012-07-12 |
+
+    |        2 | Oracle      | 2010-07-18 |
+
+    |        4 | Walmart     | 2001-12-25 |
+
+    |        5 | Time Warner | 2014-09-19 |
+
+    +----------+-------------+------------+
+
+    8 rows in set (0.00 sec)
+
+ 
+
+3. Using a 'left outer join' return all rows from the Vendors table and ONLY those rows from the Orders table where the joined fields are equal. Order the results by Vendor ID.
+
+    mysql> SELECT tblVendors.vendorID,tblVendors.vendorName,tblOrders.orderDate FROM tblVendors LEFT OUTER JOIN tblOrders ON tblVendors.vendorID = tblOrders.orderVendorID ORDER BY tblVendors.vendorID;
+
+    +----------+-------------+------------+
+
+    | vendorID | vendorName  | orderDate  |
+
+    +----------+-------------+------------+
+
+    |        1 | IBM         | 2012-07-12 |
+
+    |        2 | Oracle      | 2010-07-18 |
+
+    |        3 | Verizon     | 2011-01-12 |
+
+    |        4 | Walmart     | 2001-12-25 |
+
+    |        5 | Time Warner | 2014-09-19 |
+
+    |        6 | LG          | 2011-08-12 |
+
+    |        7 | Sony        | 2011-09-12 |
+
+    |        8 | Panasonic   | 2011-07-12 |
+
+    +----------+-------------+------------+
+
+    8 rows in set (0.00 sec)
+
+ 
+
+4. Write a query that can display the Vendor table ID and Name along with the Order ID from the Orders table for each order, use a join or other multi-table syntax.
+
+    mysql> SELECT tblVendors.vendorID,tblVendors.vendorName,tblOrders.orderDate,tblOrders.orderID FROM tblVendors INNER JOIN tblOrders ON tblVendors.vendorID = tblOrders.orderVendorID;
+
+    +----------+-------------+------------+---------+
+
+    | vendorID | vendorName  | orderDate  | orderID |
+
+    +----------+-------------+------------+---------+
+
+    |        8 | Panasonic   | 2011-07-12 |       1 |
+
+    |        6 | LG          | 2011-08-12 |       2 |
+
+    |        7 | Sony        | 2011-09-12 |       3 |
+
+    |        3 | Verizon     | 2011-01-12 |       4 |
+
+    |        1 | IBM         | 2012-07-12 |       5 |
+
+    |        2 | Oracle      | 2010-07-18 |       6 |
+
+    |        4 | Walmart     | 2001-12-25 |       7 |
+
+    |        5 | Time Warner | 2014-09-19 |       8 |
+
+    +----------+-------------+------------+---------+
+
+    8 rows in set (0.00 sec)
