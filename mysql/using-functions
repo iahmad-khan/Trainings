@@ -1,0 +1,137 @@
+1. Logged into the MySQL instance used in our previous exercises as the 'testuser' and using the 'dbTest' database, obtain a count of the records in each of the tables 'tblOrders' and 'tblVendors'.
+
+    mysql> SELECT COUNT('*') FROM tblOrders;
+
+    +------------+
+
+    | COUNT('*') |
+
+    +------------+
+
+    |          8 |
+
+    +------------+
+
+    1 row in set (0.01 sec)
+
+     
+
+    mysql> SELECT COUNT('*') FROM tblVendors;
+
+    +------------+
+
+    | COUNT('*') |
+
+    +------------+
+
+    |          8 |
+
+    +------------+
+
+    1 row in set (0.00 sec)
+
+ 
+
+2. Using a single SQL statement, obtain a count of all records in both tables combined and display the result.
+
+    mysql> SELECT (SELECT COUNT('*') FROM tblOrders) + (SELECT COUNT('*') FROM tblVendors);
+
+    +--------------------------------------------------------------------------+
+
+    | (SELECT COUNT('*') FROM tblOrders) + (SELECT COUNT('*') FROM tblVendors) |
+
+    +--------------------------------------------------------------------------+
+
+    |                                                                       16 |
+
+    +--------------------------------------------------------------------------+
+
+    1 row in set (0.01 sec)
+
+ 
+
+3. Select all records in the tblOrders database but sort the output in reverse order.
+
+    mysql> SELECT * FROM tblOrders ORDER BY orderID DESC;
+
+    +---------+---------------+------------+
+
+    | orderID | orderVendorID | orderDate  |
+
+    +---------+---------------+------------+
+
+    |       8 |             5 | 2014-09-19 |
+
+    |       7 |             4 | 2001-12-25 |
+
+    |       6 |             2 | 2010-07-18 |
+
+    |       5 |             1 | 2012-07-12 |
+
+    |       4 |             3 | 2011-01-12 |
+
+    |       3 |             7 | 2011-09-12 |
+
+    |       2 |             6 | 2011-08-12 |
+
+    |       1 |             8 | 2011-07-12 |
+
+    +---------+---------------+------------+
+
+    8 rows in set (0.00 sec)
+
+ 
+
+4. Select all records in the tblOrders database and sort in date order.
+
+    mysql> SELECT * FROM tblOrders ORDER BY orderDate;
+
+    +---------+---------------+------------+
+
+    | orderID | orderVendorID | orderDate  |
+
+    +---------+---------------+------------+
+
+    |       7 |             4 | 2001-12-25 |
+
+    |       6 |             2 | 2010-07-18 |
+
+    |       4 |             3 | 2011-01-12 |
+
+    |       1 |             8 | 2011-07-12 |
+
+    |       2 |             6 | 2011-08-12 |
+
+    |       3 |             7 | 2011-09-12 |
+
+    |       5 |             1 | 2012-07-12 |
+
+    |       8 |             5 | 2014-09-19 |
+
+    +---------+---------------+------------+
+
+    8 rows in set (0.00 sec)
+
+ 
+
+5. Select all the Vendor IDs from the 'tblorders' table greater than 4 and add them using a single query.
+
+     mysql> SELECT * FROM tblOrders WHERE orderVendorID > 4;
+
+    +---------+---------------+------------+
+
+    | orderID | orderVendorID | orderDate  |
+
+    +---------+---------------+------------+
+
+    |       1 |             8 | 2011-07-12 |
+
+    |       2 |             6 | 2011-08-12 |
+
+    |       3 |             7 | 2011-09-12 |
+
+    |       8 |             5 | 2014-09-19 |
+
+    +---------+---------------+------------+
+
+    4 rows in set (0.00 sec)
