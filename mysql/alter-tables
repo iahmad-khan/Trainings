@@ -1,0 +1,98 @@
+1. Using the 'testuser' and 'dbTest' database created in our earlier exercises, login to the database instance and choose the appropriate database for our use. List all tables in that database;
+
+    [user@linuxacademy bin]$ mysql -u testuser -p -h localhost
+    Enter password:
+    Welcome to the MariaDB monitor.  Commands end with ; or \g.
+    Your MariaDB connection id is 14
+    Server version: 5.5.44-MariaDB MariaDB Server
+
+    Copyright (c) 2000, 2015, Oracle, MariaDB Corporation Ab and others.
+
+    Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+    MariaDB [(none)]> SHOW DATABASES;
+    +--------------------+
+    | Database           |
+    +--------------------+
+    | information_schema |
+    | dbTest             |
+    +--------------------+
+    2 rows in set (0.00 sec)
+
+    MariaDB [(none)]> USE dbTest;
+    Reading table information for completion of table and column names
+    You can turn off this feature to get a quicker startup with -A
+
+    Database changed
+    MariaDB [dbTest]> SHOW TABLES;
+    +------------------+
+    | Tables_in_dbTest |
+    +------------------+
+    | tblAcctExec      |
+    | tblCustomerInfo  |
+    | tblOrders        |
+    | tblVendors       |
+    +------------------+
+    4 rows in set (0.00 sec)
+
+     
+
+2. Display the Vendors table and it's columns with constraints. Notice that although the Vendor ID cannot be NULL, the Vendor Name can be. As a result, we could have an ID with no associated name. Alter the table so that the Vendor Name is constrained so as to not allow NULL values. List the new constraints for the table.
+
+    MariaDB [dbTest]> SHOW COLUMNS FROM tblVendors;
+    +------------+-------------+------+-----+---------+----------------+
+    | Field      | Type        | Null | Key | Default | Extra          |
+    +------------+-------------+------+-----+---------+----------------+
+    | vendorID   | int(11)     | NO   | PRI | NULL    | auto_increment |
+    | vendorName | varchar(50) | YES  |     | NULL    |                |
+    +------------+-------------+------+-----+---------+----------------+
+    2 rows in set (0.00 sec)
+
+    MariaDB [dbTest]> ALTER TABLE tblVendors MODIFY COLUMN vendorName varchar(50) NOT NULL;
+    Query OK, 8 rows affected (0.04 sec)              
+    Records: 8  Duplicates: 0  Warnings: 0
+
+    MariaDB [dbTest]> SHOW COLUMNS FROM tblVendors;
+    +------------+-------------+------+-----+---------+----------------+
+    | Field      | Type        | Null | Key | Default | Extra          |
+    +------------+-------------+------+-----+---------+----------------+
+    | vendorID   | int(11)     | NO   | PRI | NULL    | auto_increment |
+    | vendorName | varchar(50) | NO   |     | NULL    |                |
+    +------------+-------------+------+-----+---------+----------------+
+
+ 
+
+3. Display the Account Executive table and it's columns and constraints. Alter the table to add another column as follows:
+
+* Field: execPhoneNumber - Integer, cannot be NULL
+
+    MariaDB [dbTest]> SHOW COLUMNS FROM tblAcctExec;
+    +---------------+-------------+------+-----+---------+----------------+
+    | Field         | Type        | Null | Key | Default | Extra          |
+    +---------------+-------------+------+-----+---------+----------------+
+    | execID        | int(11)     | NO   | PRI | NULL    | auto_increment |
+    | execLastName  | varchar(35) | NO   |     | NULL    |                |
+    | execFirstName | varchar(35) | NO   |     | NULL    |                |
+    | execSalary    | int(11)     | NO   |     | NULL    |                |
+    +---------------+-------------+------+-----+---------+----------------+
+    4 rows in set (0.00 sec)
+
+    MariaDB [dbTest]> ALTER TABLE tblAcctExec ADD COLUMN execPhoneNumber INT NOT NULL;
+    Query OK, 0 rows affected (0.05 sec)              
+    Records: 0  Duplicates: 0  Warnings: 0
+
+     
+
+4. Display the new constraints on the Account Executive table to verify the change.
+
+    MariaDB [dbTest]> SHOW COLUMNS FROM tblAcctExec;
+    +-----------------+-------------+------+-----+---------+----------------+
+    | Field           | Type        | Null | Key | Default | Extra          |
+    +-----------------+-------------+------+-----+---------+----------------+
+    | execID          | int(11)     | NO   | PRI | NULL    | auto_increment |
+    | execLastName    | varchar(35) | NO   |     | NULL    |                |
+    | execFirstName   | varchar(35) | NO   |     | NULL    |                |
+    | execSalary      | int(11)     | NO   |     | NULL    |                |
+    | execPhoneNumber | int(11)     | NO   |     | NULL    |                |
+    +-----------------+-------------+------+-----+---------+----------------+
+    5 rows in set (0.00 sec)
