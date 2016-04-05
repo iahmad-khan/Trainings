@@ -1,0 +1,98 @@
+1. Using the previously created 'testuser' and the 'dbTest' database, log in and select the database to create our structures in. List the current tables.
+
+    [user@linuxacademy bin]$ mysql -u root -p -h localhost
+    Enter password:
+    Welcome to the MariaDB monitor.  Commands end with ; or \g.
+    Your MariaDB connection id is 11
+    Server version: 5.5.44-MariaDB MariaDB Server
+
+    Copyright (c) 2000, 2015, Oracle, MariaDB Corporation Ab and others.
+
+    Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+    MariaDB [(none)]> SHOW DATABASES;
+    +--------------------+
+    | Database           |
+    +--------------------+
+    | information_schema |
+    | mysql              |
+    | performance_schema |
+    +--------------------+
+    3 rows in set (0.00 sec)
+
+    MariaDB [(none)]> USE dbTest;
+
+ 
+
+2. Create a table, using the indicated constraints, as follows:
+
+* Name: tblAcctExec
+
+* Field: execID - Primary Key, autoincrement, not null
+
+* Field: execLastName - Text, Length of 35, not null
+
+* Field: execFirstName - Text, Length of 35, not null
+
+* Field: execSalary - Integer, not null
+
+    MariaDB [dbTest]> CREATE TABLE tblAcctExec(execID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,execLastName varchar(35) NOT NULL,execFirstName varchar(35) NOT NULL,execSalary INT NOT NULL);
+    Query OK, 0 rows affected (0.07 sec)
+
+ 
+
+3. Create a table, using the indicated constraints, as follows: 
+
+* Name: tblCustomerInfo
+
+* Field: customerID - Primary Key, autoincrement, not null
+
+* Field: customerLastName - Text, Length of 35, not null
+
+* Field: customerFirstName - Text, Length of 35, not null
+
+* Field: customerEmail - Text, Length of 50, not null
+
+    MariaDB [dbTest]> CREATE TABLE tblCustomerInfo(customerID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,customerLastName varchar(35) NOT NULL,customerFirstName varchar(35) NOT NULL,customerEmail varchar(50) NOT NULL);
+    Query OK, 0 rows affected (0.01 sec)
+
+ 
+
+4. List each table in the database
+
+    MariaDB [dbTest]> SHOW TABLES;
+    +------------------+
+    | Tables_in_dbTest |
+    +------------------+
+    | tblAcctExec      |
+    | tblCustomerInfo  |
+    | tblOrders        |
+    | tblVendors       |
+    +------------------+
+    4 rows in set (0.00 sec)
+
+ 
+
+5. List the fields for all tables in the database and check that the constraints of entry match those intended during creation.
+
+    MariaDB [dbTest]> SHOW COLUMNS FROM tblAcctExec;
+    +---------------+-------------+------+-----+---------+----------------+
+    | Field         | Type        | Null | Key | Default | Extra          |
+    +---------------+-------------+------+-----+---------+----------------+
+    | execID        | int(11)     | NO   | PRI | NULL    | auto_increment |
+    | execLastName  | varchar(35) | NO   |     | NULL    |                |
+    | execFirstName | varchar(35) | NO   |     | NULL    |                |
+    | execSalary    | int(11)     | NO   |     | NULL    |                |
+    +---------------+-------------+------+-----+---------+----------------+
+    4 rows in set (0.00 sec)
+
+    MariaDB [dbTest]> SHOW COLUMNS FROM tblCustomerInfo;
+    +-------------------+-------------+------+-----+---------+----------------+
+    | Field             | Type        | Null | Key | Default | Extra          |
+    +-------------------+-------------+------+-----+---------+----------------+
+    | customerID        | int(11)     | NO   | PRI | NULL    | auto_increment |
+    | customerLastName  | varchar(35) | NO   |     | NULL    |                |
+    | customerFirstName | varchar(35) | NO   |     | NULL    |                |
+    | customerEmail     | varchar(50) | NO   |     | NULL    |                |
+    +-------------------+-------------+------+-----+---------+----------------+
+    4 rows in set (0.00 sec)
