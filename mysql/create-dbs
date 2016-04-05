@@ -1,0 +1,172 @@
+1. Log into the MySQL server instance as the root user with the already created credentials.
+
+    [rootr@linuxacademy:~]# mysql -u root -p
+
+    (Output)
+
+    Enter Password:
+
+    Welcome to the MySQL monitor.  Commands end with ; or \g.
+    Your MySQL connection id is 14
+    Server version: 5.6.26 MySQL Community Server (GPL)
+
+    Copyright (c) 2000, 2015, Oracle and/or its affiliates. All rights reserved.
+
+    Oracle is a registered trademark of Oracle Corporation and/or its
+    affiliates. Other names may be trademarks of their respective
+    owners.
+
+    Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+    mysql>
+
+    (Output)
+
+     
+
+2. After logging in, list the current databases already created on the instance.
+
+    mysql> SHOW DATABASES;
+
+    (Output)
+
+    +--------------------+
+    | Database           |
+    +--------------------+
+    | information_schema |
+    | mysql              |
+    | performance_schema |
+    +--------------------+
+    3 rows in set (0.00 sec)
+    (Output)
+
+     
+
+3. Create a new database named "dbTest". Once the database is created, list all databases again on the instance to verify.
+
+    mysql> CREATE DATABASE dbTest;
+
+    Query OK, 1 row affected (0.00 sec)
+
+    mysql> SHOW DATABASES;
+
+    (Output)
+
+    +--------------------+
+    | Database           |
+    +--------------------+
+    | information_schema |
+    | mysql              |
+
+    | dbTest             |
+    | performance_schema |
+    +--------------------+
+    4 rows in set (0.00 sec)
+    (Output)
+
+     
+
+4. Create a user called 'testuser' that is granted all permissions on the 'dbTest' database created above. Make sure that user is able to log in from the local system and has a password assigned. Once the user is created and access to the database granted, be sure to reload the privileges and then log out.
+
+    mysql> create database dbTest;
+    Query OK, 1 row affected (0.00 sec)
+
+    mysql> grant all on dbTest.* to 'testuser'@'localhost' identified by 'password';
+    Query OK, 0 rows affected (0.00 sec)
+
+    mysql> quit;
+
+     
+
+5. Verify the user can login and access the database created. Once logged in, create two tables called "tblVendors" and "tblOrders" structured as follows:
+
+tblVendors
+
+Field: vendorID, numeric type, autoincremented, primary key
+
+Field: vendorName, text, length of 50 characters or less
+
+tblOrders
+
+Field: orderID, numeric type, autoincremented, primary key
+
+Field: orderVendorID, numeric type (match type to tbleVendors::vendorID)
+
+Field: orderDate, date or timestamp type
+
+    [root@linuxacademy ~]# mysql -u testuser -p -h localhost dbTest
+
+    (Output)
+
+    Enter password:
+    Welcome to the MySQL monitor.  Commands end with ; or \g.
+    Your MySQL connection id is 15
+    Server version: 5.6.26 MySQL Community Server (GPL)
+
+    Copyright (c) 2000, 2015, Oracle and/or its affiliates. All rights reserved.
+
+    Oracle is a registered trademark of Oracle Corporation and/or its
+    affiliates. Other names may be trademarks of their respective
+    owners.
+
+    Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+    (Output)
+
+    mysql> show databases;
+    +--------------------+
+    | Database           |
+    +--------------------+
+    | information_schema |
+    | dbTest             |
+    +--------------------+
+    2 rows in set (0.00 sec)
+
+    mysql> create table tblVendors(vendorID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,vendorName varchar(50));
+    Query OK, 0 rows affected (0.07 sec)
+
+    mysql> create table tblOrders(orderID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,orderVendorID INT,orderDate DATE);
+    Query OK, 0 rows affected (0.14 sec)
+
+    mysql> show tables;
+    +------------------+
+    | Tables_in_dbTest |
+    +------------------+
+    | tblOrders        |
+    | tblVendors       |
+    +------------------+
+    2 rows in set (0.00 sec)
+
+     
+
+6. Once created, list the tables and field for each to verify.
+
+    mysql> use dbTest;
+    Database changed
+    mysql> show tables;
+    +------------------+
+    | Tables_in_dbTest |
+    +------------------+
+    | tblOrders        |
+    | tblVendors       |
+    +------------------+
+    2 rows in set (0.00 sec)
+
+    mysql> show columns from tblOrders;
+    +---------------+---------+------+-----+---------+----------------+
+    | Field         | Type    | Null | Key | Default | Extra          |
+    +---------------+---------+------+-----+---------+----------------+
+    | orderID       | int(11) | NO   | PRI | NULL    | auto_increment |
+    | orderVendorID | int(11) | YES  |     | NULL    |                |
+    | orderDate     | date    | YES  |     | NULL    |                |
+    +---------------+---------+------+-----+---------+----------------+
+    3 rows in set (0.01 sec)
+
+    mysql> show columns from tblVendors;
+    +------------+-------------+------+-----+---------+----------------+
+    | Field      | Type        | Null | Key | Default | Extra          |
+    +------------+-------------+------+-----+---------+----------------+
+    | vendorID   | int(11)     | NO   | PRI | NULL    | auto_increment |
+    | vendorName | varchar(50) | YES  |     | NULL    |                |
+    +------------+-------------+------+-----+---------+----------------+
+    2 rows in set (0.01 sec)
