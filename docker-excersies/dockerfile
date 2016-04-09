@@ -1,0 +1,419 @@
+1. Create a directory called 'custom' and change to it. In this directory, create an empty file called "Dockerfile".
+
+    [user@linuxacademy:~]$ mkdir custom
+
+    [user@linuxacademy:~]$ cd custom
+
+    [user@linuxacademy:custom/]$ touch Dockerfile
+
+ 
+
+2. Edit the "Dockerfile" created in Step #1 above. This configuration file should be written to perform the following actions:
+
+    Use the base Centos 6 Latest version image from the public repository
+    Identify you and your email address as the author and maintainer of this image
+    Update the base OS after initial import of the image
+    Install the Open-SSH Server
+    Install Apache Web Server
+    Expose ports 22 and 80 to support the services installed
+
+    [user@linuxacademy:custom/]$ vi Dockerfile
+
+    (Output) NOTE: This is one example of what this file needs to contain, yours may differ slightly
+
+     # Dockerfile that modifies centos:centos6 to update, include Apache Web
+    # Server and OpenSSH Server, exposing the appropriate ports
+    FROM centos:centos6
+    MAINTAINER User Name <username@domain.com>
+
+    # Update the server OS
+    RUN yum -y upgrade
+
+    # Install Apache Web Server
+    RUN yum -y install httpd
+
+    # Install OpenSSH-Server
+    RUN yum -y install openssh-server
+
+    # Expose the SSH and Web Ports for attachment
+    EXPOSE 22 80
+    (Output)
+
+ 
+
+3. Build the custom image from the 'Dockerfile' as created above. Name/tag this new image as "mycustomimg/withservices:v1". 
+Once the image is built, verify the image appears in your list.
+
+    [user@linuxacademy:custom/]$ docker build -t mycustomimg/withservices:v1 .
+
+    (Output) NOTE: Yours will differ slightly, FULL output listed here for reference
+
+    Sending build context to Docker daemon 2.048 kB
+    Sending build context to Docker daemon
+    Step 0 : FROM centos:centos6
+     ---> a005304e4e74
+    Step 1 : MAINTAINER User Name <username@domain.com>
+     ---> Running in f12b9039e6dd
+     ---> 67117c947e51
+    Removing intermediate container f12b9039e6dd
+    Step 2 : RUN yum -y upgrade
+     ---> Running in 05bdb93df51d
+    Loaded plugins: fastestmirror
+    Setting up Upgrade Process
+    Resolving Dependencies
+    --> Running transaction check
+    ---> Package bash.x86_64 0:4.1.2-29.el6 will be updated
+    ---> Package bash.x86_64 0:4.1.2-33.el6 will be an update
+    ---> Package bind-libs.x86_64 32:9.8.2-0.30.rc1.el6_6.3 will be updated
+    ---> Package bind-libs.x86_64 32:9.8.2-0.37.rc1.el6_7.2 will be an update
+    ---> Package bind-utils.x86_64 32:9.8.2-0.30.rc1.el6_6.3 will be updated
+    ---> Package bind-utils.x86_64 32:9.8.2-0.37.rc1.el6_7.2 will be an update
+    ---> Package binutils.x86_64 0:2.20.51.0.2-5.42.el6 will be updated
+    ---> Package binutils.x86_64 0:2.20.51.0.2-5.43.el6 will be an update
+    ---> Package centos-release.x86_64 0:6-6.el6.centos.12.2 will be updated
+    ---> Package centos-release.x86_64 0:6-7.el6.centos.12.3 will be an update
+    ---> Package chkconfig.x86_64 0:1.3.49.3-2.el6_4.1 will be updated
+    ---> Package chkconfig.x86_64 0:1.3.49.3-5.el6 will be an update
+    ---> Package curl.x86_64 0:7.19.7-40.el6_6.4 will be updated
+    ---> Package curl.x86_64 0:7.19.7-46.el6 will be an update
+    ---> Package elfutils-libelf.x86_64 0:0.158-3.2.el6 will be updated
+    ---> Package elfutils-libelf.x86_64 0:0.161-3.el6 will be an update
+    ---> Package ethtool.x86_64 2:3.5-5.el6 will be updated
+    ---> Package ethtool.x86_64 2:3.5-6.el6 will be an update
+    ---> Package gdbm.x86_64 0:1.8.0-36.el6 will be updated
+    ---> Package gdbm.x86_64 0:1.8.0-38.el6 will be an update
+    ---> Package glibc.x86_64 0:2.12-1.149.el6_6.9 will be updated
+    ---> Package glibc.x86_64 0:2.12-1.166.el6_7.1 will be an update
+    ---> Package glibc-common.x86_64 0:2.12-1.149.el6_6.9 will be updated
+    ---> Package glibc-common.x86_64 0:2.12-1.166.el6_7.1 will be an update
+    ---> Package grep.x86_64 0:2.6.3-6.el6 will be updated
+    ---> Package grep.x86_64 0:2.20-3.el6 will be an update
+    ---> Package hwdata.noarch 0:0.233-11.1.el6 will be updated
+    ---> Package hwdata.noarch 0:0.233-14.1.el6 will be an update
+    ---> Package initscripts.x86_64 0:9.03.46-1.el6.centos.1 will be updated
+    ---> Package initscripts.x86_64 0:9.03.49-1.el6.centos will be an update
+    ---> Package iproute.x86_64 0:2.6.32-33.el6_6 will be updated
+    ---> Package iproute.x86_64 0:2.6.32-45.el6 will be an update
+    ---> Package iptables.x86_64 0:1.4.7-14.el6 will be updated
+    ---> Package iptables.x86_64 0:1.4.7-16.el6 will be an update
+    ---> Package iputils.x86_64 0:20071127-17.el6_4.2 will be updated
+    ---> Package iputils.x86_64 0:20071127-20.el6 will be an update
+    ---> Package krb5-libs.x86_64 0:1.10.3-37.el6_6 will be updated
+    ---> Package krb5-libs.x86_64 0:1.10.3-42.el6 will be an update
+    ---> Package libcom_err.x86_64 0:1.41.12-21.el6 will be updated
+    ---> Package libcom_err.x86_64 0:1.41.12-22.el6 will be an update
+    ---> Package libcurl.x86_64 0:7.19.7-40.el6_6.4 will be updated
+    ---> Package libcurl.x86_64 0:7.19.7-46.el6 will be an update
+    ---> Package libgcc.x86_64 0:4.4.7-11.el6 will be updated
+    ---> Package libgcc.x86_64 0:4.4.7-16.el6 will be an update
+    ---> Package libsemanage.x86_64 0:2.0.43-4.2.el6 will be updated
+    ---> Package libsemanage.x86_64 0:2.0.43-5.1.el6 will be an update
+    ---> Package libstdc++.x86_64 0:4.4.7-11.el6 will be updated
+    ---> Package libstdc++.x86_64 0:4.4.7-16.el6 will be an update
+    ---> Package libuser.x86_64 0:0.56.13-5.el6 will be updated
+    ---> Package libuser.x86_64 0:0.56.13-8.el6_7 will be an update
+    ---> Package libxml2.x86_64 0:2.7.6-17.el6_6.1 will be updated
+    ---> Package libxml2.x86_64 0:2.7.6-20.el6 will be an update
+    ---> Package module-init-tools.x86_64 0:3.9-24.el6 will be updated
+    ---> Package module-init-tools.x86_64 0:3.9-25.el6 will be an update
+    ---> Package ncurses.x86_64 0:5.7-3.20090208.el6 will be updated
+    ---> Package ncurses.x86_64 0:5.7-4.20090207.el6 will be an update
+    ---> Package ncurses-base.x86_64 0:5.7-3.20090208.el6 will be updated
+    ---> Package ncurses-base.x86_64 0:5.7-4.20090207.el6 will be an update
+    ---> Package ncurses-libs.x86_64 0:5.7-3.20090208.el6 will be updated
+    ---> Package ncurses-libs.x86_64 0:5.7-4.20090207.el6 will be an update
+    ---> Package nss.x86_64 0:3.18.0-5.3.el6_6 will be updated
+    ---> Package nss.x86_64 0:3.19.1-3.el6_6 will be an update
+    ---> Package nss-sysinit.x86_64 0:3.18.0-5.3.el6_6 will be updated
+    ---> Package nss-sysinit.x86_64 0:3.19.1-3.el6_6 will be an update
+    ---> Package nss-tools.x86_64 0:3.18.0-5.3.el6_6 will be updated
+    ---> Package nss-tools.x86_64 0:3.19.1-3.el6_6 will be an update
+    ---> Package nss-util.x86_64 0:3.18.0-1.el6_6 will be updated
+    ---> Package nss-util.x86_64 0:3.19.1-1.el6_6 will be an update
+    ---> Package openldap.x86_64 0:2.4.39-8.el6 will be updated
+    ---> Package openldap.x86_64 0:2.4.40-5.el6 will be an update
+    ---> Package openssl.x86_64 0:1.0.1e-30.el6.9 will be updated
+    ---> Package openssl.x86_64 0:1.0.1e-42.el6 will be an update
+    ---> Package pam.x86_64 0:1.1.1-20.el6 will be updated
+    ---> Package pam.x86_64 0:1.1.1-20.el6_7.1 will be an update
+    ---> Package pcre.x86_64 0:7.8-6.el6 will be updated
+    ---> Package pcre.x86_64 0:7.8-7.el6 will be an update
+    ---> Package pinentry.x86_64 0:0.7.6-6.el6 will be updated
+    ---> Package pinentry.x86_64 0:0.7.6-8.el6 will be an update
+    ---> Package policycoreutils.x86_64 0:2.0.83-19.47.el6_6.1 will be updated
+    ---> Package policycoreutils.x86_64 0:2.0.83-24.el6 will be an update
+    ---> Package procps.x86_64 0:3.2.8-30.el6 will be updated
+    ---> Package procps.x86_64 0:3.2.8-33.el6 will be an update
+    ---> Package python.x86_64 0:2.6.6-52.el6 will be updated
+    ---> Package python.x86_64 0:2.6.6-64.el6 will be an update
+    ---> Package python-libs.x86_64 0:2.6.6-52.el6 will be updated
+    ---> Package python-libs.x86_64 0:2.6.6-64.el6 will be an update
+    ---> Package rpm.x86_64 0:4.8.0-38.el6_6 will be updated
+    ---> Package rpm.x86_64 0:4.8.0-47.el6 will be an update
+    ---> Package rpm-libs.x86_64 0:4.8.0-38.el6_6 will be updated
+    ---> Package rpm-libs.x86_64 0:4.8.0-47.el6 will be an update
+    ---> Package rpm-python.x86_64 0:4.8.0-38.el6_6 will be updated
+    ---> Package rpm-python.x86_64 0:4.8.0-47.el6 will be an update
+    ---> Package sqlite.x86_64 0:3.6.20-1.el6 will be updated
+    ---> Package sqlite.x86_64 0:3.6.20-1.el6_7.2 will be an update
+    ---> Package sysvinit-tools.x86_64 0:2.87-5.dsf.el6 will be updated
+    ---> Package sysvinit-tools.x86_64 0:2.87-6.dsf.el6 will be an update
+    ---> Package tzdata.noarch 0:2015d-1.el6 will be updated
+    ---> Package tzdata.noarch 0:2015f-1.el6 will be an update
+    ---> Package udev.x86_64 0:147-2.57.el6 will be updated
+    ---> Package udev.x86_64 0:147-2.63.el6 will be an update
+    ---> Package vim-minimal.x86_64 2:7.2.411-1.8.el6 will be updated
+    ---> Package vim-minimal.x86_64 2:7.4.629-5.el6 will be an update
+    ---> Package yum.noarch 0:3.2.29-60.el6.centos will be updated
+    ---> Package yum.noarch 0:3.2.29-69.el6.centos will be an update
+    --> Finished Dependency Resolution
+
+    Dependencies Resolved
+
+    ================================================================================
+     Package              Arch      Version                        Repository  Size
+    ================================================================================
+    Updating:
+     bash                 x86_64    4.1.2-33.el6                   base       907 k
+     bind-libs            x86_64    32:9.8.2-0.37.rc1.el6_7.2      updates    885 k
+     bind-utils           x86_64    32:9.8.2-0.37.rc1.el6_7.2      updates    186 k
+     binutils             x86_64    2.20.51.0.2-5.43.el6           base       2.8 M
+     centos-release       x86_64    6-7.el6.centos.12.3            base        21 k
+     chkconfig            x86_64    1.3.49.3-5.el6                 base       159 k
+     curl                 x86_64    7.19.7-46.el6                  base       196 k
+     elfutils-libelf      x86_64    0.161-3.el6                    base       193 k
+     ethtool              x86_64    2:3.5-6.el6                    base       103 k
+     gdbm                 x86_64    1.8.0-38.el6                   base        29 k
+     glibc                x86_64    2.12-1.166.el6_7.1             updates    3.8 M
+     glibc-common         x86_64    2.12-1.166.el6_7.1             updates     14 M
+     grep                 x86_64    2.20-3.el6                     base       345 k
+     hwdata               noarch    0.233-14.1.el6                 base       1.3 M
+     initscripts          x86_64    9.03.49-1.el6.centos           base       945 k
+     iproute              x86_64    2.6.32-45.el6                  base       367 k
+     iptables             x86_64    1.4.7-16.el6                   base       254 k
+     iputils              x86_64    20071127-20.el6                base       120 k
+     krb5-libs            x86_64    1.10.3-42.el6                  base       768 k
+     libcom_err           x86_64    1.41.12-22.el6                 base        37 k
+     libcurl              x86_64    7.19.7-46.el6                  base       168 k
+     libgcc               x86_64    4.4.7-16.el6                   base       103 k
+     libsemanage          x86_64    2.0.43-5.1.el6                 base       104 k
+     libstdc++            x86_64    4.4.7-16.el6                   base       295 k
+     libuser              x86_64    0.56.13-8.el6_7                updates    368 k
+     libxml2              x86_64    2.7.6-20.el6                   base       801 k
+     module-init-tools    x86_64    3.9-25.el6                     base       466 k
+     ncurses              x86_64    5.7-4.20090207.el6             base       268 k
+     ncurses-base         x86_64    5.7-4.20090207.el6             base        61 k
+     ncurses-libs         x86_64    5.7-4.20090207.el6             base       245 k
+     nss                  x86_64    3.19.1-3.el6_6                 updates    856 k
+     nss-sysinit          x86_64    3.19.1-3.el6_6                 updates     46 k
+     nss-tools            x86_64    3.19.1-3.el6_6                 updates    433 k
+     nss-util             x86_64    3.19.1-1.el6_6                 updates     66 k
+     openldap             x86_64    2.4.40-5.el6                   base       283 k
+     openssl              x86_64    1.0.1e-42.el6                  base       1.5 M
+     pam                  x86_64    1.1.1-20.el6_7.1               updates    658 k
+     pcre                 x86_64    7.8-7.el6                      base       196 k
+     pinentry             x86_64    0.7.6-8.el6                    base        66 k
+     policycoreutils      x86_64    2.0.83-24.el6                  base       651 k
+     procps               x86_64    3.2.8-33.el6                   base       217 k
+     python               x86_64    2.6.6-64.el6                   base        76 k
+     python-libs          x86_64    2.6.6-64.el6                   base       5.3 M
+     rpm                  x86_64    4.8.0-47.el6                   base       904 k
+     rpm-libs             x86_64    4.8.0-47.el6                   base       316 k
+     rpm-python           x86_64    4.8.0-47.el6                   base        59 k
+     sqlite               x86_64    3.6.20-1.el6_7.2               updates    300 k
+     sysvinit-tools       x86_64    2.87-6.dsf.el6                 base        60 k
+     tzdata               noarch    2015f-1.el6                    updates    442 k
+     udev                 x86_64    147-2.63.el6                   base       355 k
+     vim-minimal          x86_64    2:7.4.629-5.el6                base       422 k
+     yum                  noarch    3.2.29-69.el6.centos           base       1.0 M
+
+    Transaction Summary
+    ================================================================================
+    Upgrade      52 Package(s)
+
+    Total download size: 44 M
+    Downloading Packages:
+    --------------------------------------------------------------------------------
+    Total                                           6.0 MB/s |  44 MB     00:07    
+    warning: rpmts_HdrFromFdno: Header V3 RSA/SHA1 Signature, key ID c105b9de: NOKEY
+    Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+    Importing GPG key 0xC105B9DE:
+     Userid : CentOS-6 Key (CentOS 6 Official Signing Key) <centos-6-key@centos.org>
+     Package: centos-release-6-6.el6.centos.12.2.x86_64 (@CentOS/$releasever)
+     From   : /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+    Running rpm_check_debug
+    Running Transaction Test
+    Transaction Test Succeeded
+    Running Transaction
+    Warning: RPMDB altered outside of yum.
+      Updating   : libgcc-4.4.7-16.el6.x86_64                                 1/104
+      Updating   : centos-release-6-7.el6.centos.12.3.x86_64                  2/104
+      Updating   : tzdata-2015f-1.el6.noarch                                  3/104
+      Updating   : ncurses-base-5.7-4.20090207.el6.x86_64                     4/104
+      Updating   : glibc-common-2.12-1.166.el6_7.1.x86_64                     5/104
+      Updating   : glibc-2.12-1.166.el6_7.1.x86_64                            6/104
+      Updating   : ncurses-libs-5.7-4.20090207.el6.x86_64                     7/104
+      Updating   : bash-4.1.2-33.el6.x86_64                                   8/104
+      Updating   : chkconfig-1.3.49.3-5.el6.x86_64                            9/104
+      Updating   : nss-util-3.19.1-1.el6_6.x86_64                            10/104
+      Updating   : nss-3.19.1-3.el6_6.x86_64                                 11/104
+      Updating   : nss-sysinit-3.19.1-3.el6_6.x86_64                         12/104
+      Updating   : libcom_err-1.41.12-22.el6.x86_64                          13/104
+      Updating   : krb5-libs-1.10.3-42.el6.x86_64                            14/104
+      Updating   : openssl-1.0.1e-42.el6.x86_64                              15/104
+      Updating   : elfutils-libelf-0.161-3.el6.x86_64                        16/104
+      Updating   : pam-1.1.1-20.el6_7.1.x86_64                               17/104
+      Updating   : libxml2-2.7.6-20.el6.x86_64                               18/104
+      Updating   : sysvinit-tools-2.87-6.dsf.el6.x86_64                      19/104
+      Updating   : 32:bind-libs-9.8.2-0.37.rc1.el6_7.2.x86_64                20/104
+      Updating   : nss-tools-3.19.1-3.el6_6.x86_64                           21/104
+      Updating   : libcurl-7.19.7-46.el6.x86_64                              22/104
+      Updating   : rpm-libs-4.8.0-47.el6.x86_64                              23/104
+      Updating   : curl-7.19.7-46.el6.x86_64                                 24/104
+      Updating   : rpm-4.8.0-47.el6.x86_64                                   25/104
+      Updating   : openldap-2.4.40-5.el6.x86_64                              26/104
+      Updating   : binutils-2.20.51.0.2-5.43.el6.x86_64                      27/104
+      Updating   : module-init-tools-3.9-25.el6.x86_64                       28/104
+      Updating   : hwdata-0.233-14.1.el6.noarch                              29/104
+      Updating   : procps-3.2.8-33.el6.x86_64                                30/104
+      Updating   : sqlite-3.6.20-1.el6_7.2.x86_64                            31/104
+      Updating   : 2:ethtool-3.5-6.el6.x86_64                                32/104
+      Updating   : libstdc++-4.4.7-16.el6.x86_64                             33/104
+      Updating   : pcre-7.8-7.el6.x86_64                                     34/104
+      Updating   : grep-2.20-3.el6.x86_64                                    35/104
+    install-info: No such file or directory for /usr/share/info/grep.info.gz
+      Updating   : gdbm-1.8.0-38.el6.x86_64                                  36/104
+      Updating   : python-2.6.6-64.el6.x86_64                                37/104
+      Updating   : python-libs-2.6.6-64.el6.x86_64                           38/104
+      Updating   : rpm-python-4.8.0-47.el6.x86_64                            39/104
+      Updating   : libsemanage-2.0.43-5.1.el6.x86_64                         40/104
+      Updating   : policycoreutils-2.0.83-24.el6.x86_64                      41/104
+      Updating   : iptables-1.4.7-16.el6.x86_64                              42/104
+      Updating   : iproute-2.6.32-45.el6.x86_64                              43/104
+      Updating   : iputils-20071127-20.el6.x86_64                            44/104
+      Updating   : initscripts-9.03.49-1.el6.centos.x86_64                   45/104
+      Updating   : udev-147-2.63.el6.x86_64                                  46/104
+      Updating   : yum-3.2.29-69.el6.centos.noarch                           47/104
+      Updating   : libuser-0.56.13-8.el6_7.x86_64                            48/104
+      Updating   : 32:bind-utils-9.8.2-0.37.rc1.el6_7.2.x86_64               49/104
+      Updating   : pinentry-0.7.6-8.el6.x86_64                               50/104
+      Updating   : ncurses-5.7-4.20090207.el6.x86_64                         51/104
+      Updating   : 2:vim-minimal-7.4.629-5.el6.x86_64                        52/104
+      Cleanup    : 32:bind-utils-9.8.2-0.30.rc1.el6_6.3.x86_64               53/104
+      Cleanup    : 32:bind-libs-9.8.2-0.30.rc1.el6_6.3.x86_64                54/104
+      Cleanup    : iproute-2.6.32-33.el6_6.x86_64                            55/104
+      Cleanup    : iptables-1.4.7-14.el6.x86_64                              56/104
+      Cleanup    : policycoreutils-2.0.83-19.47.el6_6.1.x86_64               57/104
+      Cleanup    : iputils-20071127-17.el6_4.2.x86_64                        58/104
+      Cleanup    : udev-147-2.57.el6.x86_64                                  59/104
+      Cleanup    : initscripts-9.03.46-1.el6.centos.1.x86_64                 60/104
+      Cleanup    : pinentry-0.7.6-6.el6.x86_64                               61/104
+      Cleanup    : yum-3.2.29-60.el6.centos.noarch                           62/104
+      Cleanup    : rpm-python-4.8.0-38.el6_6.x86_64                          63/104
+      Cleanup    : python-2.6.6-52.el6.x86_64                                64/104
+      Cleanup    : python-libs-2.6.6-52.el6.x86_64                           65/104
+      Cleanup    : openssl-1.0.1e-30.el6.9.x86_64                            66/104
+      Cleanup    : grep-2.6.3-6.el6.x86_64                                   67/104
+      Cleanup    : pcre-7.8-6.el6.x86_64                                     68/104
+      Cleanup    : libuser-0.56.13-5.el6.x86_64                              69/104
+      Cleanup    : libcurl-7.19.7-40.el6_6.4.x86_64                          70/104
+      Cleanup    : openldap-2.4.39-8.el6.x86_64                              71/104
+      Cleanup    : curl-7.19.7-40.el6_6.4.x86_64                             72/104
+      Cleanup    : rpm-libs-4.8.0-38.el6_6.x86_64                            73/104
+      Cleanup    : rpm-4.8.0-38.el6_6.x86_64                                 74/104
+      Cleanup    : nss-tools-3.18.0-5.3.el6_6.x86_64                         75/104
+      Cleanup    : nss-sysinit-3.18.0-5.3.el6_6.x86_64                       76/104
+      Cleanup    : nss-3.18.0-5.3.el6_6.x86_64                               77/104
+      Cleanup    : krb5-libs-1.10.3-37.el6_6.x86_64                          78/104
+      Cleanup    : libstdc++-4.4.7-11.el6.x86_64                             79/104
+      Cleanup    : procps-3.2.8-30.el6.x86_64                                80/104
+      Cleanup    : 2:vim-minimal-7.2.411-1.8.el6.x86_64                      81/104
+      Cleanup    : ncurses-5.7-3.20090208.el6.x86_64                         82/104
+      Cleanup    : hwdata-0.233-11.1.el6.noarch                              83/104
+      Cleanup    : module-init-tools-3.9-24.el6.x86_64                       84/104
+      Cleanup    : binutils-2.20.51.0.2-5.42.el6.x86_64                      85/104
+      Cleanup    : pam-1.1.1-20.el6.x86_64                                   86/104
+      Cleanup    : libcom_err-1.41.12-21.el6.x86_64                          87/104
+      Cleanup    : chkconfig-1.3.49.3-2.el6_4.1.x86_64                       88/104
+      Cleanup    : nss-util-3.18.0-1.el6_6.x86_64                            89/104
+      Cleanup    : elfutils-libelf-0.158-3.2.el6.x86_64                      90/104
+      Cleanup    : gdbm-1.8.0-36.el6.x86_64                                  91/104
+      Cleanup    : sqlite-3.6.20-1.el6.x86_64                                92/104
+      Cleanup    : sysvinit-tools-2.87-5.dsf.el6.x86_64                      93/104
+      Cleanup    : 2:ethtool-3.5-5.el6.x86_64                                94/104
+      Cleanup    : libsemanage-2.0.43-4.2.el6.x86_64                         95/104
+      Cleanup    : libxml2-2.7.6-17.el6_6.1.x86_64                           96/104
+      Cleanup    : centos-release-6-6.el6.centos.12.2.x86_64                 97/104
+      Cleanup    : ncurses-libs-5.7-3.20090208.el6.x86_64                    98/104
+      Cleanup    : bash-4.1.2-29.el6.x86_64                                  99/104
+      Cleanup    : glibc-common-2.12-1.149.el6_6.9.x86_64                   100/104
+      Cleanup    : glibc-2.12-1.149.el6_6.9.x86_64                          101/104
+      Cleanup    : tzdata-2015d-1.el6.noarch                                102/104
+      Cleanup    : ncurses-base-5.7-3.20090208.el6.x86_64                   103/104
+      Cleanup    : libgcc-4.4.7-11.el6.x86_64                               104/104
+      Verifying  : 32:bind-libs-9.8.2-0.37.rc1.el6_7.2.x86_64                 1/104
+      Verifying  : bash-4.1.2-33.el6.x86_64                                   2/104
+      Verifying  : libxml2-2.7.6-20.el6.x86_64                                3/104
+      Verifying  : procps-3.2.8-33.el6.x86_64                                 4/104
+      Verifying  : pinentry-0.7.6-8.el6.x86_64                                5/104
+      Verifying  : pam-1.1.1-20.el6_7.1.x86_64                                6/104
+      Verifying  : pcre-7.8-7.el6.x86_64                                      7/104
+      Verifying  : python-libs-2.6.6-64.el6.x86_64                            8/104
+      Verifying  : python-2.6.6-64.el6.x86_64                                 9/104
+      Verifying  : nss-tools-3.19.1-3.el6_6.x86_64                           10/104
+      Verifying  : module-init-tools-3.9-25.el6.x86_64                       11/104
+      Verifying  : sqlite-3.6.20-1.el6_7.2.x86_64                            12/104
+      Verifying  : ncurses-base-5.7-4.20090207.el6.x86_64                    13/104
+      Verifying  : hwdata-0.233-14.1.el6.noarch                              14/104
+      Verifying  : ncurses-5.7-4.20090207.el6.x86_64                         15/104
+      Verifying  : 2:ethtool-3.5-6.el6.x86_64                                16/104
+      Verifying  : udev-147-2.63.el6.x86_64                                  17/104
+      Verifying  : iptables-1.4.7-16.el6.x86_64                              18/104
+      Verifying  : rpm-python-4.8.0-47.el6.x86_64                            19/104
+      Verifying  : chkconfig-1.3.49.3-5.el6.x86_64                           20/104
+      Verifying  : iputils-20071127-20.el6.x86_64                            21/104
+      Verifying  : 32:bind-utils-9.8.2-0.37.rc1.el6_7.2.x86_64               22/104
+      Verifying  : libstdc++-4.4.7-16.el6.x86_64                             23/104
+      Verifying  : openssl-1.0.1e-42.el6.x86_64                              24/104
+      Verifying  : curl-7.19.7-46.el6.x86_64                                 25/104
+      Verifying  : 2:vim-minimal-7.4.629-5.el6.x86_64                        26/104
+      Verifying  : krb5-libs-1.10.3-42.el6.x86_64                            27/104
+      Verifying  : tzdata-2015f-1.el6.noarch                                 28/104
+      Verifying  : grep-2.20-3.el6.x86_64                                    29/104
+      Verifying  : elfutils-libelf-0.161-3.el6.x86_64                        30/104
+      Verifying  : centos-release-6-7.el6.centos.12.3.x86_64                 31/104
+      Verifying  : gdbm-1.8.0-38.el6.x86_64                                  32/104
+      Verifying  : nss-util-3.19.1-1.el6_6.x86_64                            33/104
+      Verifying  : libcurl-7.19.7-46.el6.x86_64                              34/104
+      Verifying  : sysvinit-tools-2.87-6.dsf.el6.x86_64                      35/104
+      Verifying  : libgcc-4.4.7-16.el6.x86_64                                36/104
+      Verifying  : nss-3.19.1-3.el6_6.x86_64                                 37/104
+      Verifying  : libsemanage-2.0.43-5.1.el6.x86_64                         38/104
+      Verifying  : glibc-common-2.12-1.166.el6_7.1.x86_64                    39/104
+      Verifying  : yum-3.2.29-69.el6.centos.noarch                           40/104
+      Verifying  : libuser-0.56.13-8.el6_7.x86_64                            41/104
+      Verifying  : glibc-2.12-1.166.el6_7.1.x86_64                           42/104
+      Verifying  : libcom_err-1.41.12-22.el6.x86_64                          43/104
+      Verifying  : nss-sysinit-3.19.1-3.el6_6.x86_64                         44/104
+      Verifying  : ncurses-libs-5.7-4.20090207.el6.x86_64                    45/104
+      Verifying  : rpm-libs-4.8.0-47.el6.x86_64                              46/104
+      Verifying  : policycoreutils-2.0.83-24.el6.x86_64                      47/104
+      Verifying  : iproute-2.6.32-45.el6.x86_64                              48/104
+      Verifying  : binutils-2.20.51.0.2-5.43.el6.x86_64                      49/104
+      Verifying  : initscripts-9.03.49-1.el6.centos.x86_64                   50/104
+      Verifying  : rpm-4.8.0-47.el6.x86_64                                   51/104
+      Verifying  : openldap-2.4.40-5.el6.x86_64                              52/104
+      Verifying  : libstdc++-4.4.7-11.el6.x86_64                             53/104
+      Verifying  : ncurses-base-5.7-3.20090208.el6.x86_64                    54/104
+      Verifying  : ncurses-libs-5.7-3.20090208.el6.x86_64                    55/104
+      Verifying  : glibc-2.12-1.149.el6_6.9.x86_64                           56/104
+      Verifying  : 32:bind-libs-9.8.2-0.30.rc1.el6_6.3.x86_64                57/104
+      Verifying  : nss-util-3.18.0-1.el6_6.x86_64                            58/104
+      Verifying  : 2:ethtool-3.5-5.el6.x86_64                                59/104
+      Verifying  : pam-1.1.1-20.el6.x86_64                                   60/104
+      Verifying  : ncurses-5.7-3.20090208.el6.x86_64                         61/104
+      Verifying  : elfutils-libelf-0.158-3.2.el6.x86_64                      62/104
+      Verifying  : libgcc-4.4.7-11.el6.x86_64                                63/104
+      Verifying  : libxml2-2.7.6-17.el6_6.1.x86_64                           64/104
+      Verifying  : python-libs-2.6.6-52.el6.x86_64                           65/104
+      Verifying  : libcom_err-1.41.12-21.el6.x86_64           
