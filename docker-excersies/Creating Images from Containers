@@ -1,4 +1,6 @@
-1. Using the CentOS 6 base image download, start a container based on that image. Be sure that container starts connected to the current terminal in interactive mode and runs the bash command so you are logged in to the command prompt on the container once it boots.
+1. Using the CentOS 6 base image download, start a container based on that image. Be sure that container 
+starts connected to the current terminal in interactive mode and runs the bash command so you are logged in
+to the command prompt on the container once it boots.
 
     [user@linuxacademy:~]$ docker run -it centos:centos6 /bin/bash
 
@@ -10,7 +12,8 @@
 
      
 
-2. Once you are sitting at a command prompt on the running container, execute the update command (installing all updates for the container OS).
+2. Once you are sitting at a command prompt on the running container, execute the update command
+(installing all updates for the container OS).
 
     [root@b237d65fd197 /]# yum -y update (or yum -y upgrade)
 
@@ -22,7 +25,8 @@
 
  
 
-3. Now that updates are complete, install the Apache Web Server. Once installed, make sure the web server service will start and verify that the container is listening on port 80 (install other software if needed to do so).
+3. Now that updates are complete, install the Apache Web Server. Once installed, make sure the web server service will 
+start and verify that the container is listening on port 80 (install other software if needed to do so).
 
     [root@b237d65fd197 /]# yum install httpd
 
@@ -66,7 +70,8 @@
 
  
 
-4. Exit the container. Once the container is stopped, execute the appropriate command to list all stopped containers and locate the name and ID of the container you just exited. Make a note of the name and ID.
+4. Exit the container. Once the container is stopped, execute the appropriate command to list all stopped containers
+and locate the name and ID of the container you just exited. Make a note of the name and ID.
 
     [root@b237d65fd197 /]# exit
 
@@ -81,7 +86,8 @@
 
  
 
-5. Using the name or ID of the container, commit the changes you made within it to a new base image called "newcentos:withapache" and verify that it shows when you list the images on your system.
+5. Using the name or ID of the container, commit the changes you made within it to a new base image 
+called "newcentos:withapache" and verify that it shows when you list the images on your system.
 
     [user@linuxacademy:~]$ docker commit b237d65fd197 newcentos:withapache
 
