@@ -1,0 +1,222 @@
+1. List the base images on the system. Choose a base image for Ubuntu and create a container from that image. This container should be named "basic_web" and should be interactive, attached to the current console and run the bash prompt.
+
+    user@linuxacademy:~$ docker images
+
+    REPOSITORY                 TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+
+    mycustomimg/withservices   v1                  dcfdd130c812        31 hours ago        506.9 MB
+
+    newcentos                  withapache          18bd1fc4d60f        2 days ago          480.6 MB
+
+    ubuntu                     trusty-20150814     91e54dfb1179        4 days ago          188.4 MB
+
+    ubuntu                     14.04               91e54dfb1179        4 days ago          188.4 MB
+
+    ubuntu                     14.04.3             91e54dfb1179        4 days ago          188.4 MB
+
+    ubuntu                     latest              91e54dfb1179        4 days ago          188.4 MB
+
+    ubuntu                     trusty              91e54dfb1179        4 days ago          188.4 MB
+
+    user@linuxacademy:~$ docker run -it --name="basic_web" ubuntu:latest /bin/bash
+
+    root@528b8c33ab7a:/#
+
+ 
+
+2. Once you are logged into the container at the prompt, install all updates. After updates are installed, install the Apache Web Server and verify that it is listening on Port 80.
+
+    root@528b8c33ab7a:/# apt-get update && apt-get upgrade && apt-get install apache2
+
+    (OUTPUT) NOTE: sample of the end of the output
+
+    ...
+
+    3Enabling module setenvif.
+
+    Enabling module filter.
+
+    Enabling module deflate.
+
+    Enabling module status.
+
+    Enabling conf charset.
+
+    Enabling conf localized-error-pages.
+
+    Enabling conf other-vhosts-access-log.
+
+    Enabling conf security.
+
+    Enabling conf serve-cgi-bin.
+
+    Enabling site 000-default.
+
+    invoke-rc.d: policy-rc.d denied execution of start.
+
+    Setting up ssl-cert (1.0.33) ...
+
+    Processing triggers for libc-bin (2.19-0ubuntu6.6) ...
+
+    Processing triggers for sgml-base (1.26+nmu4ubuntu1) ...
+
+    Processing triggers for ureadahead (0.100.0-16) ...
+
+    root@528b8c33ab7a:/#
+
+    root@528b8c33ab7a:/# apt-get install telnet
+
+    Reading package lists... Done
+
+    Building dependency tree
+
+    Reading state information... Done
+
+    The following NEW packages will be installed:
+
+      telnet
+
+    0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
+
+    Need to get 67.1 kB of archives.
+
+    After this operation, 167 kB of additional disk space will be used.
+
+    Get:1 http://archive.ubuntu.com/ubuntu/ trusty/main telnet amd64 0.17-36build2 [67.1 kB]
+
+    Fetched 67.1 kB in 0s (89.7 kB/s)
+
+    Selecting previously unselected package telnet.
+
+    (Reading database ... 12458 files and directories currently installed.)
+
+    Preparing to unpack .../telnet_0.17-36build2_amd64.deb ...
+
+    Unpacking telnet (0.17-36build2) ...
+
+    Setting up telnet (0.17-36build2) ...
+
+    update-alternatives: using /usr/bin/telnet.netkit to provide /usr/bin/telnet (telnet) in auto mode
+
+    root@528b8c33ab7a:/# telnet localhost 80
+
+    Trying ::1...
+
+    Trying 127.0.0.1...
+
+    telnet: Unable to connect to remote host: Connection refused
+
+    root@528b8c33ab7a:/# service apache2 start
+
+     * Starting web server apache2                                                                                        AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.17.0.13. Set the 'ServerName' directive globally to suppress this message
+
+     *
+
+    root@528b8c33ab7a:/# telnet localhost 80
+
+    Trying ::1...
+
+    Connected to localhost.
+
+    Escape character is '^]'.
+
+    helo
+
+     
+
+     
+
+    501 Not Implemented
+
+    Not Implemented
+
+    helo to /index.html not supported.
+
+     
+    Apache/2.4.7 (Ubuntu) Server at 172.17.0.13 Port 80
+
+    Connection closed by foreign host.
+
+    root@528b8c33ab7a:/#
+
+     
+
+ 3. Using the root account profile file in the root home directory, add the command to start the web server whenever a bash session is started. 
+
+    root@528b8c33ab7a:~# vi .bashrc
+
+    NOTE: Add the line "service apache2 start" to the /root/.bashrc file at the very END
+
+ 
+
+4. Stop the container. Once stopped, commit the container as a base image called "centos:baseweb".
+
+    root@528b8c33ab7a:~# exit
+
+    tcox@ubuntuvideo:~$ docker commit basic_web centos:baseweb
+
+    e9c87aeba30b82e66edb7143b89c10b801b866002f0659d0fd78ba5b48a82e8e
+
+    tcox@ubuntuvideo:~$ docker images
+
+    REPOSITORY                 TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+
+    centos                     baseweb             e9c87aeba30b        3 seconds ago       224.2 MB
+
+    mycustomimg/withservices   v1                  dcfdd130c812        31 hours ago        506.9 MB
+
+    newcentos                  withapache          18bd1fc4d60f        2 days ago          480.6 MB
+
+    ubuntu                     trusty              91e54dfb1179        4 days ago          188.4 MB
+
+    ubuntu                     trusty-20150814     91e54dfb1179        4 days ago          188.4 MB
+
+    ubuntu                     14.04               91e54dfb1179        4 days ago          188.4 MB
+
+    ubuntu                     14.04.3             91e54dfb1179        4 days ago          188.4 MB
+
+    ubuntu                     latest              91e54dfb1179        4 days ago          188.4 MB
+
+ 
+
+5. Create a container based on the new "centos:baseweb" image called "test_container". It should run interactively, attached to the console and starting a bash prompt. Once logged into the container, verify that the Apache service is running and port 80 is listening. Exit the container.
+
+    user@linuxacademy:~$ docker run -it --name="test_container" centos:baseweb /bin/bash
+
+     * Starting web server apache2                                                                                        AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.17.0.14. Set the 'ServerName' directive globally to suppress this message
+
+     *
+
+    root@b830f2ecb2ca:/# telnet localhost 80
+
+    Trying ::1...
+
+    Connected to localhost.
+
+    Escape character is '^]'.
+
+    helo
+
+    <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+
+    <html><head>
+
+    <title>501 Not Implemented</title>
+
+    </head><body>
+
+    <h1>Not Implemented</h1>
+
+    <p>helo to /index.html not supported.<br />
+
+    </p>
+
+    <hr>
+
+    <address>Apache/2.4.7 (Ubuntu) Server at 172.17.0.14 Port 80</address>
+
+    </body></html>
+
+    Connection closed by foreign host.
+
+    root@b830f2ecb2ca:/# exit
