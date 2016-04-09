@@ -1,0 +1,127 @@
+1. List all currently install Docker images. If you do not have at least three Docker base images at this point, please pull down other Docker images and/or follow the other exercises in this tutorial.
+
+    user@linuxacademy:~$ docker images
+
+    REPOSITORY                 TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+
+    mycustomimg/withservices   v1                  dcfdd130c812        30 hours ago        506.9 MB
+
+    newcentos                  withapache          18bd1fc4d60f        2 days ago          480.6 MB
+
+    ubuntu                     latest              91e54dfb1179        4 days ago          188.4 MB
+
+    ubuntu                     trusty              91e54dfb1179        4 days ago          188.4 MB
+
+    ubuntu                     trusty-20150814     91e54dfb1179        4 days ago          188.4 MB
+
+    ubuntu                     14.04               91e54dfb1179        4 days ago          188.4 MB
+
+    ubuntu                     14.04.3             91e54dfb1179        4 days ago          188.4 MB
+
+    centos                     6                   a005304e4e74        9 weeks ago         203.1 MB
+
+    centos                     centos6             a005304e4e74        9 weeks ago         203.1 MB
+
+     
+
+2. Execute the command to remove a base image that you have previously created a container from and note the resulting message.
+
+    user@linuxacademy:~$ docker rmi centos:6
+
+    Error response from daemon: Conflict, cannot delete a005304e4e74 because the container bad607059560 is using it, use -f to force
+
+    FATA[0000] Error: failed to remove one or more images
+
+     
+
+3. Run the appropriate command to remove the container that Step #2 indicated is preventing the deletion of that base image.
+
+    user@linuxacademy:~$ docker ps -a
+
+    CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                          PORTS               NAMES
+
+    bad607059560        centos:6            "/bin/bash"         2 minutes ago       Exited (0) About a minute ago                       insane_tesla
+
+    a8eccaa97e32        ubuntu:14.04        "/bin/bash"         29 minutes ago      Exited (0) 28 minutes ago                           my_container
+
+    b237d65fd197        centos:6            "/bin/bash"         2 days ago          Exited (0) 2 days ago                               furious_rosalind
+
+    user@linuxacademy:~$ docker rm insane_tesla
+
+    insane_tesla
+
+    user@linuxacademy:~$ docker ps -a
+
+    CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                      PORTS               NAMES
+
+    a8eccaa97e32        ubuntu:14.04        "/bin/bash"         29 minutes ago      Exited (0) 28 minutes ago                       my_container
+
+    b237d65fd197        centos:6            "/bin/bash"         2 days ago          Exited (0) 2 days ago                           furious_rosalind
+
+ 
+
+4. List all previously run containers and remove all of them one at a time. Verify that the command to list stopped containers shows nothing before continuing.
+
+    user@linuxacademy:~$ docker ps -a
+
+    CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                      PORTS               NAMES
+
+    a8eccaa97e32        ubuntu:14.04        "/bin/bash"         30 minutes ago      Exited (0) 29 minutes ago                       my_container
+
+    b237d65fd197        centos:6            "/bin/bash"         2 days ago          Exited (0) 2 days ago                           furious_rosalind
+
+    user@linuxacademy:~$ docker rm my_container && docker rm furious_rosalind
+
+    my_container
+
+    furious_rosalind
+
+    user@linuxacademy:~$ docker ps -a
+
+    CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+
+ 
+
+5. Rerun the command executed in Step #2 and then list the base images on your system.
+
+    user@linuxacademy:~$ docker images
+
+    REPOSITORY                 TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+
+    mycustomimg/withservices   v1                  dcfdd130c812        30 hours ago        506.9 MB
+
+    newcentos                  withapache          18bd1fc4d60f        2 days ago          480.6 MB
+
+    ubuntu                     14.04               91e54dfb1179        4 days ago          188.4 MB
+
+    ubuntu                     14.04.3             91e54dfb1179        4 days ago          188.4 MB
+
+    ubuntu                     latest              91e54dfb1179        4 days ago          188.4 MB
+
+    ubuntu                     trusty              91e54dfb1179        4 days ago          188.4 MB
+
+    ubuntu                     trusty-20150814     91e54dfb1179        4 days ago          188.4 MB
+
+    centos                     6                   a005304e4e74        9 weeks ago         203.1 MB
+
+    user@linuxacademy:~$ docker rmi centos:6
+
+    Untagged: centos:6
+
+    user@linuxacademy:~$ docker images
+
+    REPOSITORY                 TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+
+    mycustomimg/withservices   v1                  dcfdd130c812        30 hours ago        506.9 MB
+
+    newcentos                  withapache          18bd1fc4d60f        2 days ago          480.6 MB
+
+    ubuntu                     latest              91e54dfb1179        4 days ago          188.4 MB
+
+    ubuntu                     trusty              91e54dfb1179        4 days ago          188.4 MB
+
+    ubuntu                     trusty-20150814     91e54dfb1179        4 days ago          188.4 MB
+
+    ubuntu                     14.04               91e54dfb1179        4 days ago          188.4 MB
+
+    ubuntu                     14.04.3             91e54dfb1179        4 days ago          188.4 MB
