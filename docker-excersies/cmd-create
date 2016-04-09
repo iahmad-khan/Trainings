@@ -1,0 +1,379 @@
+1. Using the Docker base image for Ubuntu, create a container with the following characteristics:
+
+  - Interactive
+
+  - Attached to Terminal
+
+  - Using Google Public DNS
+
+  - Named 'mycontainer1'
+
+    [user@linuxacademy docker]$ docker images
+
+    REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+
+    docker.io/ubuntu    latest              91e54dfb1179        5 days ago          188.3 MB
+
+    docker.io/centos    6                   a005304e4e74        9 weeks ago         203.1 MB
+
+    [user@linuxacademy docker]$ docker run -it --dns=8.8.8.8 --name="mycontainer1" docker.io/ubuntu:latest /bin/bash
+
+    root@6330006f7289:/# cat /etc/resolv.conf 
+
+    nameserver 8.8.8.8
+
+ 
+
+2. Exit the container from Step #1. Using the Docker base image for Ubuntu, create a container with the following characteristics:
+
+  - Interactive
+
+  - Attached to Terminal 
+
+  - Using Google Public DNS
+
+  - Using Domain Search "mydomain.local"
+
+  - Named 'mycontainer2'
+
+     [user@linuxacademy docker]$ docker run -it --dns=8.8.8.8 --dns-search="mydomain.local" --name="mycontainer2" docker.io/ubuntu:latest /bin/bash
+
+    root@2879176e6c81:/# cat /etc/resolv.conf 
+
+    nameserver 8.8.8.8
+
+    search mydomain.local
+
+ 
+
+3. Exit the container from Step #2. Using the Docker base image for Ubuntu, create a container with the following characteristics:
+
+  - Interactive
+
+  - Attached to Terminal 
+
+  - Using Google Public DNS
+
+  - Using Domain Search "mydomain.local"
+
+  - Create a mount called '/local_vol'
+
+  - Create a mount called '/remote_vol' that mounts the file system in /home/user
+
+  - Named 'mycontainer3'
+
+    [user@linuxacademy docker]$ docker run -it --dns=8.8.8.8 --dns-search="mydomain.local" --name="mycontainer3" -v /local_vol -v /home/tcox/docker/mydata:/remote_vol docker.io/ubuntu:latest /bin/bash
+
+    root@c5e3e6599556:/# df -h
+
+    Filesystem                                                                                         Size  Used Avail Use% Mounted on
+
+    /dev/mapper/docker-8:2-203558447-c5e3e65995567b3249f537843d4ff39644925c9265bbd48cd623b6e3564eef52  9.8G  245M  9.0G   3% /
+
+    tmpfs                                                                                              2.0G     0  2.0G   0% /dev
+
+    shm                                                                                                 64M     0   64M   0% /dev/shm
+
+    /dev/sda2                                                                                           36G  4.3G   32G  12% /local_vol
+
+    tmpfs                                                                                              2.0G     0  2.0G   0% /run/secrets
+
+    tmpfs                                                                                              2.0G     0  2.0G   0% /proc/kcore
+
+    tmpfs                                                                                              2.0G     0  2.0G   0% /proc/timer_stats
+
+    root@c5e3e6599556:/# cat /etc/resolv.conf 
+
+    nameserver 8.8.8.8
+
+    search mydomain.local
+
+    root@c5e3e6599556:/# cd /local_vol/
+
+    root@c5e3e6599556:/local_vol# cd /remote_vol/
+
+    root@c5e3e6599556:/remote_vol# 
+
+ 
+
+4. Exit the container from Step #3. List all the containers. List all characteristics inspected from 'mycontainer2' and then remove and verify removal of all containers.
+
+    [user@linuxacademy docker]$ docker ps -a
+
+    CONTAINER ID        IMAGE                     COMMAND             CREATED             STATUS                     PORTS               NAMES
+
+    c5e3e6599556        docker.io/ubuntu:latest   "/bin/bash"         2 minutes ago       Exited (0) 3 seconds ago                       mycontainer3        
+
+    2879176e6c81        docker.io/ubuntu:latest   "/bin/bash"         4 minutes ago       Exited (0) 3 minutes ago                       mycontainer2        
+
+    6330006f7289        docker.io/ubuntu:latest   "/bin/bash"         7 minutes ago       Exited (0) 5 minutes ago                       mycontainer1        
+
+    [user@linuxacademy docker]$ docker inspect mycontainer1
+
+    (NOTE: SOMETHING SIMILAR FOR EACH CONTAINER - RUN THE ABOVE COMMAND FOR EACH NAME)
+
+    [
+
+    {
+
+        "Id": "6330006f72899510254d23f845c4507d604773d2fcf2bffb77f44da1330208c1",
+
+        "Created": "2015-08-25T21:05:43.135824241Z",
+
+        "Path": "/bin/bash",
+
+        "Args": [],
+
+        "State": {
+
+            "Running": false,
+
+            "Paused": false,
+
+            "Restarting": false,
+
+            "OOMKilled": false,
+
+            "Dead": false,
+
+            "Pid": 0,
+
+            "ExitCode": 0,
+
+            "Error": "",
+
+            "StartedAt": "2015-08-25T21:05:44.409339189Z",
+
+            "FinishedAt": "2015-08-25T21:07:32.103884307Z"
+
+        },
+
+        "Image": "91e54dfb11794fad694460162bf0cb0a4fa710cfa3f60979c177d920813e267c",
+
+        "NetworkSettings": {
+
+            "Bridge": "",
+
+            "EndpointID": "",
+
+            "Gateway": "",
+
+            "GlobalIPv6Address": "",
+
+            "GlobalIPv6PrefixLen": 0,
+
+            "HairpinMode": false,
+
+            "IPAddress": "",
+
+            "IPPrefixLen": 0,
+
+            "IPv6Gateway": "",
+
+            "LinkLocalIPv6Address": "",
+
+            "LinkLocalIPv6PrefixLen": 0,
+
+            "MacAddress": "",
+
+            "NetworkID": "",
+
+            "PortMapping": null,
+
+            "Ports": null,
+
+            "SandboxKey": "",
+
+            "SecondaryIPAddresses": null,
+
+            "SecondaryIPv6Addresses": null
+
+        },
+
+        "ResolvConfPath": "/var/lib/docker/containers/6330006f72899510254d23f845c4507d604773d2fcf2bffb77f44da1330208c1/resolv.conf",
+
+        "HostnamePath": "/var/lib/docker/containers/6330006f72899510254d23f845c4507d604773d2fcf2bffb77f44da1330208c1/hostname",
+
+        "HostsPath": "/var/lib/docker/containers/6330006f72899510254d23f845c4507d604773d2fcf2bffb77f44da1330208c1/hosts",
+
+        "LogPath": "/var/lib/docker/containers/6330006f72899510254d23f845c4507d604773d2fcf2bffb77f44da1330208c1/6330006f72899510254d23f845c4507d604773d2fcf2bffb77f44da1330208c1-json.log",
+
+        "Name": "/mycontainer1",
+
+        "RestartCount": 0,
+
+        "Driver": "devicemapper",
+
+        "ExecDriver": "native-0.2",
+
+        "MountLabel": "",
+
+        "ProcessLabel": "",
+
+        "Volumes": {},
+
+        "VolumesRW": {},
+
+        "AppArmorProfile": "",
+
+        "ExecIDs": null,
+
+        "HostConfig": {
+
+            "Binds": null,
+
+            "ContainerIDFile": "",
+
+            "LxcConf": [],
+
+            "Memory": 0,
+
+            "MemorySwap": 0,
+
+            "CpuShares": 0,
+
+            "CpuPeriod": 0,
+
+            "CpusetCpus": "",
+
+            "CpusetMems": "",
+
+            "CpuQuota": 0,
+
+            "BlkioWeight": 0,
+
+            "OomKillDisable": false,
+
+            "Privileged": false,
+
+            "PortBindings": {},
+
+            "Links": null,
+
+            "PublishAllPorts": false,
+
+            "Dns": [
+
+                "8.8.8.8"
+
+            ],
+
+            "DnsSearch": null,
+
+            "ExtraHosts": null,
+
+            "VolumesFrom": null,
+
+            "Devices": [],
+
+            "NetworkMode": "bridge",
+
+            "IpcMode": "",
+
+            "PidMode": "",
+
+            "UTSMode": "",
+
+            "CapAdd": null,
+
+            "CapDrop": null,
+
+            "RestartPolicy": {
+
+                "Name": "no",
+
+                "MaximumRetryCount": 0
+
+            },
+
+            "SecurityOpt": null,
+
+            "ReadonlyRootfs": false,
+
+            "Ulimits": null,
+
+            "LogConfig": {
+
+                "Type": "json-file",
+
+                "Config": {}
+
+            },
+
+            "CgroupParent": ""
+
+        },
+
+        "Config": {
+
+            "Hostname": "6330006f7289",
+
+            "Domainname": "",
+
+            "User": "",
+
+            "AttachStdin": true,
+
+            "AttachStdout": true,
+
+            "AttachStderr": true,
+
+            "PortSpecs": null,
+
+            "ExposedPorts": null,
+
+            "Tty": true,
+
+            "OpenStdin": true,
+
+            "StdinOnce": true,
+
+            "Env": null,
+
+            "Cmd": [
+
+                "/bin/bash"
+
+            ],
+
+            "Image": "docker.io/ubuntu:latest",
+
+            "Volumes": null,
+
+            "VolumeDriver": "",
+
+            "WorkingDir": "",
+
+            "Entrypoint": null,
+
+            "NetworkDisabled": false,
+
+            "MacAddress": "",
+
+            "OnBuild": null,
+
+            "Labels": {},
+
+            "Init": ""
+
+        }
+
+    }
+
+    ]
+
+    [user@linuxacademy docker]$ docker rm mycontainer1
+
+    mycontainer1
+
+    [user@linuxacademy docker]$ docker rm mycontainer2
+
+    mycontainer2
+
+    [user@linuxacademy docker]$ docker rm mycontainer3
+
+    mycontainer3
+
+    [user@linuxacademy docker]$ docker ps -a
+
+    CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
