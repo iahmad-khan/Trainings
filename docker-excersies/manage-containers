@@ -1,0 +1,135 @@
+1. Create a container from the base image for the latest version of Ubuntu available 
+(if you do not have an Ubuntu base image installed locally, pull the latest one down for your local repository). 
+The container should be started in interactive mode attached to the current terminal and running the bash shell. 
+Once running, shut the container down by exiting.
+
+    user@linuxacademy:~$ docker pull ubuntu:latest
+
+    Pulling repository ubuntu
+
+    91e54dfb1179: Download complete
+
+    d3a1f33e8a5a: Download complete
+
+    c22013c84729: Download complete
+
+    d74508fb6632: Download complete
+
+    Status: Downloaded newer image for ubuntu:latest
+
+    user@linuxacademy:~$ docker images
+
+    REPOSITORY                 TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+
+    mycustomimg/withservices   v1                  dcfdd130c812        29 hours ago        506.9 MB
+
+    newcentos                  withapache          18bd1fc4d60f        2 days ago          480.6 MB
+
+    ubuntu                     latest              91e54dfb1179        4 days ago          188.4 MB
+
+    ubuntu                     trusty              91e54dfb1179        4 days ago          188.4 MB
+
+    ubuntu                     trusty-20150814     91e54dfb1179        4 days ago          188.4 MB
+
+    ubuntu                     14.04               91e54dfb1179        4 days ago          188.4 MB
+
+    ubuntu                     14.04.3             91e54dfb1179        4 days ago          188.4 MB
+
+    centos                     6                   a005304e4e74        9 weeks ago         203.1 MB
+
+    centos                     centos6             a005304e4e74        9 weeks ago         203.1 MB
+
+    user@linuxacademy:~$ docker run -it ubuntu:latest /bin/bash
+
+    root@a163412a382b:/# exit
+
+    exit
+
+ 
+
+2. Run the appropriate Docker command to get the name of the previously run container. Issue the appropriate command to 
+restart the container that you obtained the name of. Do NOT create a new container, restart the one we just used.
+
+    user@linuxacademy:~$ docker ps -a
+
+    CONTAINER ID        IMAGE               COMMAND             CREATED              STATUS                          PORTS               NAMES
+
+    a163412a382b        ubuntu:14.04        "/bin/bash"         About a minute ago   Exited (0) About a minute ago                       agitated_bohr
+
+    b237d65fd197        centos:6            "/bin/bash"         2 days ago           Exited (0) 2 days ago                               furious_rosalind
+
+    user@linuxacademy:~$ docker restart agitated_bohr
+
+    agitated_bohr
+
+    user@linuxacademy:~$ docker ps
+
+    CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+
+    a163412a382b        ubuntu:14.04        "/bin/bash"         2 minutes ago       Up 16 seconds                           agitated_bohr
+
+  
+
+3. Stop the container. Remove that container from the system completely using the appropriate command.
+
+    user@linuxacademy:~$ docker stop agitated_bohr
+
+    agitated_bohr
+
+    user@linuxacademy:~$ docker ps
+
+    CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+
+    user@linuxacademy:~$ docker ps -a
+
+    CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                     PORTS               NAMES
+
+    a163412a382b        ubuntu:14.04        "/bin/bash"         3 minutes ago       Exited (0) 5 seconds ago                       agitated_bohr
+
+    b237d65fd197        centos:6            "/bin/bash"         2 days ago          Exited (0) 2 days ago                          furious_rosalind
+
+    user@linuxacademy:~$ docker rm agitated_bohr
+
+    agitated_bohr
+
+    user@linuxacademy:~$ docker ps -a
+
+    CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                  PORTS               NAMES
+
+    b237d65fd197        centos:6            "/bin/bash"         2 days ago          Exited (0) 2 days ago                       furious_rosalind
+
+ 
+
+4. Create (not run) a container called "my_container", create it with parameters that will allow it to run interactively 
+and attached to the local console running the bash shell. Verify that the container is not running.
+
+    user@linuxacademy:~$ docker create -it --name="my_container" ubuntu:latest /bin/bash
+
+    a8eccaa97e322ff640bb9f7071f191dc9a514afb324af28269ffbb7ae754666f
+
+    user@linuxacademy:~$ docker ps -a
+
+    CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                  PORTS               NAMES
+
+    a8eccaa97e32        ubuntu:14.04        "/bin/bash"         4 seconds ago                                                   my_container
+
+    b237d65fd197        centos:6            "/bin/bash"         2 days ago          Exited (0) 2 days ago                       furious_rosalind
+
+5. Start the container and again, verify the container is running. Run the appropriate command to attach your session 
+to the running container so you are logged into the shell.
+
+    user@linuxacademy:~$ docker start my_container
+
+    my_container
+
+    user@linuxacademy:~$ docker ps
+
+    CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+
+    a8eccaa97e32        ubuntu:14.04        "/bin/bash"         30 seconds ago      Up 2 seconds                            my_container
+
+    user@linuxacademy:~$ docker attach my_container
+
+    root@a8eccaa97e32:/#
+
+    root@a8eccaa97e32:/# exit
