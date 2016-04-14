@@ -1,0 +1,57 @@
+1. Become the 'postgres' user. Create a user called 'usrToDelete', adding that user so that you are prompted to enter a password during creation.
+
+    postgres@tcox5:~$ createuser -D -A -P usrToDelete
+
+    Enter password for new role:
+
+    Enter it again:
+
+     
+
+2. Become the 'postgres' user. Create a user called 'usrTest', adding that user so that you are prompted to enter a password during creation.
+
+    postgres@tcox5:~$ createuser -D -A -P usrTest
+
+    Enter password for new role:
+
+    Enter it again:
+
+ 
+
+3. Create a database called 'dbToDelete'. During the creation of that database, add the user created in Step #1 above so that access to that database is granted to the user.
+
+    postgres@tcox5:~$ createdb -O usrToDelete dbToDelete
+
+ 
+
+4.  Create a database called 'dbTest'. During the creation of that database, add the user created in Step #2 above so that access to that database is granted to the user.
+
+    postgres@tcox5:~$ createdb -O usrTest dbTest
+
+ 
+
+5. Drop the user called 'usrToDelete' that was created in Step #1 as listed above.
+
+    postgres@tcox5:~$ psql
+
+    psql (9.3.9)
+
+    Type "help" for help.
+
+     
+
+    postgres=# drop user usrTest
+
+ 
+
+6. Drop the database called 'dbToDelete' that was created in Step #3 as listed above.
+
+    postgres@tcox5:~$ psql
+
+    psql (9.3.9)
+
+    Type "help" for help.
+
+     
+
+    postgres-# drop database dbToDelete
