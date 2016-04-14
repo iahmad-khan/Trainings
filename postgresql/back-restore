@@ -1,0 +1,363 @@
+1. Become the 'postgres' user. Using the appropriate utility, take a backup of the 'dbTest' database as follows:
+
+* Connect to the database for backup as the 'postgres' user created previously
+
+* Take a full backup of the 'dbTest' database
+
+* Write it to a full SQL backup called 'myDBTestBkup.sql'
+
+    postgres@tcox5:~$ pg_dump -U postgres dbTest -f myDBTestBkup.sql
+
+ 
+
+2. Display the SQL backup file and make sure all records as well as table structures will be recreated.
+
+    postgres@tcox5:~$ cat myDBTestBkup.sql
+
+    --
+
+    -- PostgreSQL database dump
+
+    --
+
+     
+
+    SET statement_timeout = 0;
+
+    SET lock_timeout = 0;
+
+    SET client_encoding = 'UTF8';
+
+    SET standard_conforming_strings = on;
+
+    SET check_function_bodies = false;
+
+    SET client_min_messages = warning;
+
+     
+
+    --
+
+    -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner:
+
+    --
+
+     
+
+    CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+     
+
+     
+
+    --
+
+    -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner:
+
+    --
+
+     
+
+    COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+     
+
+     
+
+    SET search_path = public, pg_catalog;
+
+     
+
+    SET default_tablespace = '';
+
+     
+
+    SET default_with_oids = false;
+
+     
+
+    --
+
+    -- Name: tblorders; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
+
+    --
+
+     
+
+    CREATE TABLE tblorders (
+
+        orderid integer,
+
+        ordervendorid integer,
+
+        orderdate date
+
+    );
+
+     
+
+     
+
+    ALTER TABLE public.tblorders OWNER TO postgres;
+
+     
+
+    --
+
+    -- Name: tblvendors; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
+
+    --
+
+     
+
+    CREATE TABLE tblvendors (
+
+        vendorid integer,
+
+        vendorname character varying(50)
+
+    );
+
+     
+
+     
+
+    ALTER TABLE public.tblvendors OWNER TO postgres;
+
+     
+
+    --
+
+    -- Data for Name: tblorders; Type: TABLE DATA; Schema: public; Owner: postgres
+
+    --
+
+     
+
+    COPY tblorders (orderid, ordervendorid, orderdate) FROM stdin;
+
+    8       1       2011-07-12
+
+    6       1       2011-08-12
+
+    7       2       2011-09-12
+
+    3       3       2011-01-12
+
+    1       1       2012-07-12
+
+    2       4       2010-07-18
+
+    4       2       2001-12-25
+
+    5       1       2014-09-19
+
+    \.
+
+     
+
+     
+
+    --
+
+    -- Data for Name: tblvendors; Type: TABLE DATA; Schema: public; Owner: postgres
+
+    --
+
+     
+
+    COPY tblvendors (vendorid, vendorname) FROM stdin;
+
+    1       IBM
+
+    2       HP
+
+    3       Dell
+
+    4       Misc
+
+    \.
+
+     
+
+     
+
+    --
+
+    -- Name: public; Type: ACL; Schema: -; Owner: postgres
+
+    --
+
+     
+
+    REVOKE ALL ON SCHEMA public FROM PUBLIC;
+
+    REVOKE ALL ON SCHEMA public FROM postgres;
+
+    GRANT ALL ON SCHEMA public TO postgres;
+
+    GRANT ALL ON SCHEMA public TO PUBLIC;
+
+     
+
+     
+
+    --
+
+    -- PostgreSQL database dump complete
+
+    --
+
+ 
+
+ 
+
+3. Create a new database called 'dbRestore'.
+
+    postgres@tcox5:~$ createdb dbMyRestore
+
+ 
+
+4. Restore the DB from 'myDBTestBkup.sql' to the newly created DB from Step #3.
+
+    postgres@tcox5:~$ psql -U postgres -d dbMyRestore -f myDBTestBkup.sql
+
+    SET
+
+    SET
+
+    SET
+
+    SET
+
+    SET
+
+    SET
+
+    CREATE EXTENSION
+
+    COMMENT
+
+    SET
+
+    SET
+
+    SET
+
+    CREATE TABLE
+
+    ALTER TABLE
+
+    CREATE TABLE
+
+    ALTER TABLE
+
+    REVOKE
+
+    REVOKE
+
+    GRANT
+
+    GRANT
+
+ 
+
+5. Connect to the new DB, display all the tables and records in the tables to verify the correct information and structure was restored.
+
+    postgres@tcox5:~$ psql
+
+    psql (9.3.9)
+
+    Type "help" for help.
+
+     
+
+    postgres=# \l
+
+                                        List of databases
+
+        Name     |    Owner    | Encoding |   Collate   |    Ctype    |   Access privileges
+
+    -------------+-------------+----------+-------------+-------------+-----------------------
+
+     dbMyRestore | postgres    | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+
+     dbTest      | usrTest     | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+
+     dbToDelete  | usrToDelete | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+
+     postgres    | postgres    | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+
+     template0   | postgres    | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/postgres          +
+
+                 |             |          |             |             | postgres=CTc/postgres
+
+     template1   | postgres    | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/postgres          +
+
+                 |             |          |             |             | postgres=CTc/postgres
+
+    (6 rows)
+
+     
+
+    postgres=# \c dbMyRestore
+
+    You are now connected to database "dbMyRestore" as user "postgres".
+
+    dbMyRestore=# \d
+
+               List of relations
+
+     Schema |    Name    | Type  |  Owner
+
+    --------+------------+-------+----------
+
+     public | tblorders  | table | postgres
+
+     public | tblvendors | table | postgres
+
+    (2 rows)
+
+     
+
+    dbMyRestore=# SELECT * FROM tblOrders;
+
+     orderid | ordervendorid | orderdate
+
+    ---------+---------------+------------
+
+           8 |             1 | 2011-07-12
+
+           6 |             1 | 2011-08-12
+
+           7 |             2 | 2011-09-12
+
+           3 |             3 | 2011-01-12
+
+           1 |             1 | 2012-07-12
+
+           2 |             4 | 2010-07-18
+
+           4 |             2 | 2001-12-25
+
+           5 |             1 | 2014-09-19
+
+    (8 rows)
+
+     
+
+    dbMyRestore=# SELECT * FROM tblVendors;
+
+     vendorid | vendorname
+
+    ----------+------------
+
+            1 | IBM
+
+            2 | HP
+
+            3 | Dell
+
+            4 | Misc
+
+    (4 rows)
