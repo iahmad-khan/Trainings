@@ -1,0 +1,9 @@
+ports needed to be opened, for puppet to work correctly:
+
+
+3000   --> for web base PE installer
+8140   --> for any type of puppet request ( clientt server)
+61613  --> for orchestration requests , mcollective
+443    --> https , access enterprise console
+5432   --> if using puppetdb on different server
+
