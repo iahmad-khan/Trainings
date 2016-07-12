@@ -1,6 +1,17 @@
-puppet
-puppetdb
-facter tool
-mcollective
-hiera
-puppetdashboard
+
+--puppet
+--puppetdb
+--facter tool
+--mcollective
+--hiera
+--puppet-dashboard
+--activemq
+
+It also installs and uses:
+--pe-httpd
+--postgresql
+--java
+--ruby
+--passenger
+--openssl
+
