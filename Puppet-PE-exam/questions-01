@@ -1,0 +1,218 @@
+
+
+
+1) Live management allows you to execute specific functions on node Live. This includes Puppet actions
+
+Correct
+Correct answer
+
+True
+Further Reading
+
+https://linuxacademy.com/cp/courses/lesson/course/264/lesson/9/module/34
+
+2) What ports is required for the console based installation of the Puppet master?
+
+Correct
+Correct answer
+
+443, 3000
+Further Reading
+
+https://linuxacademy.com/cp/courses/lesson/course/264/lesson/1/module/34
+
+3) You want to use live management to trigger a Puppet agent run only on nodes running Red Hat Enterprise Linux and its derivatives.
+
+Correct
+Correct answer
+
+Use the advanced filter to filter by facts for osfamily, with a value of RedHat, and trigger a run using the Control Puppet section of live management.
+
+4) What is the location of the Puppet enterprise config file?
+
+Correct
+Correct answer
+
+/etc/puppetlabs/puppet/puppet.conf
+Further Reading
+
+https://linuxacademy.com/cp/courses/lesson/course/264/lesson/1/module/34
+
+5) Which command is used to view all certificates "waiting" to be signed?
+
+Correct
+Correct answer
+
+puppet cert list
+Further Reading
+
+https://linuxacademy.com/cp/courses/lesson/course/264/lesson/2/module/34
+
+6) How would you view the current distribution using facter?
+
+Correct
+Correct answer
+
+facter operatingsystem
+Further Reading
+
+https://linuxacademy.com/cp/courses/lesson/course/264/lesson/6/module/34
+
+7) Facter is a tool unique only to Puppet
+
+Correct
+Correct answer
+
+False
+Explanation
+
+Facter is a stand alone tool that can be installed regardless if Puppet is installed. However, it is also installed during the Puppet installation process on the Puppet master as well as the Puppet agent.
+
+8) The catalog of resource configuration (the modules/class that define the configuration) is compiled on the node that is running Puppet agent
+
+Correct
+Correct answer
+
+False
+Explanation
+
+The Puppet classes that make up a node are all compiled on the Puppet masted based on the Node Object (facts) from the node making the request. After it is compiled the Puppet agent on the node downloads the catalog and enforces the catalog resources. The reason it is compiled on the Puppet master is to reduce resource overhead on the node at puppet agent runtime.
+Further Reading
+
+https://linuxacademy.com/cp/courses/lesson/course/264/lesson/10/module/34
+
+9) By default when a node first runs Puppet agent and communicates with the puppet master a certificate is created for signing. When the certificate is signed what is the name of the certificate on the Puppet master?
+
+Correct
+Correct answer
+
+The nodes/servers current hostname at time of first Puppet agent run on the node
+Explanation
+
+The certificate name is based off the nodes hostname at the time the node first runs Puppet agent. The certificate name will always be based off of that nodes hostname even if the nodes hostname changes after the certificate is signed on the puppet master. If the nodes hostname was originally node1.mylabserver.com when the certificate is signed and the hostname changed to node2.mylabserver.com after the signing of the certificate then the certificate name on the Puppet master will still be node1.mylabserver.com.
+Further Reading
+
+https://linuxacademy.com/cp/courses/lesson/course/264/lesson/2/module/34
+
+10) What ports are required for the puppet agent to run including the ability for orchestration management?
+
+Correct
+Correct answer
+
+8140, 61613
+Explanation
+
+All the ports above are used within a Puppet environment. However, the only ports required for a PUPPET AGENT to make puppet requests as well as allow orchestration management is port 8140 and 61613.
+Further Reading
+
+https://linuxacademy.com/cp/courses/lesson/course/264/lesson/2/module/34
+
+11) How do you access the Puppet enterprise console after installation? (FQDN stands for fully qualified domain name)
+
+Correct
+Correct answer
+
+https://fqdn
+
+12) What is the location of the Puppet open source puppet.conf file?
+
+Correct
+Correct answer
+
+/etc/puppet/puppet.conf
+Further Reading
+
+https://linuxacademy.com/cp/courses/lesson/course/264/lesson/1/module/34
+
+13) After the nodes Puppet agent runs for the first time, the certificate must be signed by the Puppet master so that the Puppet master and node can securely communicate. What might you do to automate this process?
+
+Correct
+Correct answer
+
+Use certificate auto signing on the Puppet master
+Explanation
+
+Puppet allows you to enable a feature called auto signing. The configuration of this feature is beyond the scope of this course but to enable it you start with the configuration file autosign.conf.
+
+14) By default when the Puppet agent is installed a daemon is also installed. At what interval by default does the daemon run on the server?
+
+Correct
+Correct answer
+
+30 minutes
+Further Reading
+
+https://linuxacademy.com/cp/courses/lesson/course/264/lesson/2/module/34
+
+15) When running the Puppet master installation via the GUI an answers file is created. What is the location of the answers file?
+
+Ccorrect
+Correct answer
+
+/opt/puppet/share/installer/answers
+Further Reading
+
+https://linuxacademy.com/cp/courses/lesson/course/264/lesson/1/module/34
+
+16) Puppets orchestration management engine is MCollective
+
+Correct
+Correct answer
+
+True
+
+17) In order to automate the configuration of a Puppet master you could pass an answers file to the puppet-enterprise-installer. In order to do this which flags could you use?
+
+Correct
+Correct answer
+
+-a, -A
+Further Reading
+
+https://linuxacademy.com/cp/courses/lesson/course/264/lesson/1/module/34
+
+18) What is the name of the primary puppet service?
+
+Correct
+Correct answer
+
+pe-puppet
+Further Reading
+
+https://linuxacademy.com/cp/courses/lesson/course/264/lesson/1/module/34
+
+19) What is the primary Puppet service log file?
+
+Correct
+Correct answer
+
+/var/log/messages
+Explanation
+
+Puppet installs many components and each component logs differently. For example pe-httpd (the apache web server installed by Puppet) is logged in /var/log/pe-httpd. However, the core Puppet service logs can be found in the systems log files. On most Linux distributions that is /var/log/messages
+Further Reading
+
+https://linuxacademy.com/cp/courses/lesson/course/264/lesson/1/module/34
+
+20) When using Live management in the console, which of the following can you sort/search nodes by?
+
+Correct
+Correct answer
+
+hostname, A fact on the system, class
+Further Reading
+
+https://linuxacademy.com/cp/courses/lesson/course/264/lesson/9/module/34
+
+21) When making a change to the puppet.conf config file you expect the changes to take place but are not applied during your next Puppet run. What might you do to resolve this issue?
+
+Correct
+Correct answer
+
+Restart the puppet service
+Explanation
+
+The puppet.conf settings are loaded at service start time. In order to apply the change you must start and stop the service.
+Further Reading
+
+https://linuxacademy.com/cp/courses/lesson/course/264/lesson/3/module/34
