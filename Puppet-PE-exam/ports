@@ -7,5 +7,7 @@ Ports that needed to be opened, for puppet to work correctly:
 443    --> https , access enterprise console
 5432   --> if using puppetdb on different server
 
-If using web based installer , set permit root login to yes in ssh config file on the puppet server 
+If using web based installer , set permit root login to yes in ssh config file on the puppet server and restart sshd service. 
+
+Also check the hosts file and add the FQDN of the machine  , next to 127.0.0.1
 
