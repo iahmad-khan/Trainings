@@ -1,4 +1,4 @@
-ports needed to be opened, for puppet to work correctly:
+Ports that needed to be opened, for puppet to work correctly:
 
 
 3000   --> for web base PE installer
