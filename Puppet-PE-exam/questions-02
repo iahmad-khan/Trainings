@@ -1,0 +1,34 @@
+
+1) You've just completed writing an SSH module and need to validate your Puppet DSL code. What command would you issue to validate the init.pp file and ensure there are no DSL syntax related errors?
+Correct
+
+Correct answer
+puppet parser validate init.pp
+
+2) During compile time puppet searches the modulepath directory to autoload modules found inside the directory path
+Correct
+
+Correct answer
+True
+
+3) What would the file location of fail2ban class be given the following class name? base::ssh::fail2ban
+
+Correct
+
+Correct answer
+/etc/puppetlabs/puppet/modules/base/manifests/ssh/fail2ban.pp
+
+4) Puppet parser will both validate syntax and ensure that puppet resource type usage is correct
+Correct
+
+Correct answer
+False
+
+Explanation
+Puppet parser will only validate the DSL syntax. Resources are not evaluated except at compile time.
+
+5) What are common directories needed inside a new module?
+Correct
+
+Correct answer
+files, manifests, tests
