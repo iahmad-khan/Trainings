@@ -1,0 +1,24 @@
+# systemctl stop firewalld
+# systemctl disable firewalld 
+or
+# or systemctl mask firewalld
+
+
+NFSv4 on centos7
+
+# yum update && yum install nfs-utils
+
+Apache server
+# yum update && yum install httpd
+
+Squid
+# yum update && yum install squid squidGuard
+
+Email server
+# yum update && yum install postfix dovecot
+
+Iptables
+# lsmod | grep ip_tables
+
+# modprobe -a ip_tables
+
