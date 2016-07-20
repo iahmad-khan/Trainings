@@ -1,0 +1,34 @@
+Smoke testing exists to test:
+
+
+integration
+basic functionality
+all functionality
+syntax
+Correct!
+
+The baseline for module testing used by Puppet Labs is that:
+
+
+Each manifest should have a corresponding test manifest.
+Only the `init.pp` manifest needs to have a test manifest.
+You randomly select one manifest for which you create a test manifest.
+Only modules that are on the Puppet Forge need to have test manifests.
+Correct!
+
+The puppet apply command in --noop mode:
+
+Compiles a manifest and enforces it immediately.
+Makes permanent changes to the catalog.
+Informs you of system drift and expected convergence actions WHILE making any changes.
+Informs you of system drift and expected convergence actions BEFORE making any changes.
+Correct!
+
+True or False.
+
+There is no harm in running puppet apply against files in the manifests directory, but this will not apply any changes.
+
+True
+False
+
+Correct!
