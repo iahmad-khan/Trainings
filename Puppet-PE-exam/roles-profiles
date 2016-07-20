@@ -1,0 +1,47 @@
+You can use roles and profiles to help you design and implement a better Puppet infrastructure.
+
+
+True
+False
+
+Answer: True
+Correct!
+
+What gets assigned to nodes?
+
+Roles
+Classes
+Modules
+Profiles
+
+Answer: Roles
+Correct!
+
+Roles are made up of:
+
+exactly 1 profile
+1 or more profiles
+exactly 1 technology class
+1 or more technology classes
+
+Answer: 1 or more profiles
+Correct!
+
+Where do you declare class parameters?
+
+Node
+Role
+Profile
+Both Roles and Profiles
+
+Answer: Profile
+Correct!
+
+Roles and profiles are a specific feature of the Puppet DSL.
+
+
+True
+False
+
+Answer: False
+Correct.
