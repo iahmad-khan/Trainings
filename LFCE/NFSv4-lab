@@ -1,0 +1,44 @@
+Edit /etc/default/nfs-common to enable idmapd
+
+NEED_IDMAPD=YES
+
+And edit /etc/idmapd.conf with your local domain name (the default is the FQDN of the host).
+Domain = yourdomain.com
+
+# systemctl start nfs-common 	[systemd based systems]
+
+edit /etc/exports
+
+/filesystem/to/export  client1([options]) clientN([options])
+
+/NFS-SHARE  	192.168.0.17(fsid=0,no_subtree_check,rw,root_squash,sync,anonuid=1000,anongid=1000)
+/NFS-SHARE/mydir    	192.168.0.17(ro,sync,no_subtree_check)
+
+# showmount -e [IP or hostname]
+
+
+# systemctl restart nfs-server
+
+Autofs reads /etc/auto.master, which has the following format:
+[mount point]	[map file]
+
+Where [map file] is used to indicate multiple mount points within [mount point].
+
+Edit your /etc/auto.master as follows:
+/media/nfs	/etc/auto.nfs-share	--timeout=60
+
+and create a map file named /etc/auto.nfs-share with the following contents:
+
+writeable_share  -fstype=nfs4 192.168.0.10:/
+non_writeable_share  -fstype=nfs4 192.168.0.10:/mydir
+
+Note that the first field in /etc/auto.nfs-share is the name of a subdirectory inside /media/nfs.
+Each subdirectory is created dynamically by autofs.
+
+Now, restart the autofs service:
+# systemctl restart autofs
+
+and finally, to enable autofs to start on boot, run the following command:
+# systemctl enable autofs
+
+mount | grep nfs-share
