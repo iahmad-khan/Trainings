@@ -1,0 +1,33 @@
+The NTP module is written in:
+HTML
+--Puppet code
+Python
+Markdown
+
+        Correct! 
+
+Using Puppet Enterprise console to deploy NTP lets you trace events to the code level.
+--True
+False
+
+        Correct! 
+
+Which of the following is a class within the NTP module?
+Config
+Config:NTP
+--NTP::Config
+
+        Correct! 
+
+Puppet code is human-readable.
+--True
+False
+
+        Correct! 
+
+The NTP class can include a UDLC resource that allows local time to be used if an NTP server is unreachable.
+--True
+False
+
+        Correct! 
+
