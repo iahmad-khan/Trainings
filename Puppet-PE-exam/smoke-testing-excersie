@@ -1,0 +1,41 @@
+When you smoke test your Puppet code, you are validating that the code compiles by enforcing a class one time only, locally. You can run the 
+puppet apply --noop and puppet apply commands against tests files in the examples directory to smoke test your Puppet code.
+
+In this exercise, you can practice validating the Puppet code and applying smoke tests in the module that we have created for you.
+
+1. Click on the Practice VM icon to log in to the virtual machine that we have set up for your practice session.
+
+2. Use the login and password displayed to log in.
+
+2. Change directories to /etc/puppetlabs/code/modules/ssh directory, and list the contents to see the sub-directories it contains.
+
+3. Run puppet parser on each of the files in the manifests directory. Edit the files to correct any errors, and then re-run the command.
+
+For example:
+
+puppet parser validate /etc/puppetlabs/code/modules/ssh/manifests/init.pp
+
+4. Run puppet lint on each of the files in the manifests directory. Edit the files to correct any errors, and then re-run the command.
+
+For example:
+
+puppet-lint /etc/puppetlabs/code/modules/ssh/manifests/init.pp
+
+5. After you have fixed any errors, you still may receive warnings, such as shown in this example:
+
+WARNING: class inheriting from params class on line ...
+
+This and other warnings are notifications of a condition or state. To ignore a warning, re-run puppet lint with the ignore flag, as shown in this example:
+
+puppet-lint --no-class_inherits_from_params_class-check examples/init.pp
+
+6. Run puppet apply --noop on each of the files in the examples directory. If you encounter any errors, correct them and then re-run the command.
+
+
+7. Run puppet apply on each of the files in the examples directory.
+
+
+Exercise Solutions: 
+You can find the corrected files in:
+
+/etc/puppetlabs/code/modules/ssh/ssh_solutions
