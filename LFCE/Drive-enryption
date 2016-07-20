@@ -1,0 +1,85 @@
+Preparing A Drive / Partition / Loop Device for Encryption
+
+# dd if=/dev/urandom of=/dev/sdb bs=4096 
+
+Testing for Encryption Support
+
+# grep -i config_dm_crypt /boot/config-$(uname -r)
+# lsmod | grep dm_crypt
+# modprobe dm_crypt
+
+Installing Cryptsetup
+
+# yum update && yum install cryptsetup
+
+Setting Up an Encrypted Partition
+
+# cryptsetup --version
+# cryptsetup -y luksFormat /dev/sdb1
+
+
+# cryptsetup luksOpen /dev/sdb1 my_encrypted_partition
+
+# mkfs.ext4 /dev/mapper/my_encrypted_partition
+
+# mkdir /mnt/enc
+# mount /dev/mapper/my_encrypted_partition /mnt/enc
+# mount | grep partition
+
+When you are done writing to or reading from your encrypted file system, simply unmount it
+# umount /mnt/enc
+
+and close the LUKS partition using,
+# cryptesetup luksClose my_encrypted_partition
+
+
+Testing Encryption
+
+# cryptsetup luksOpen /dev/sdb1 my_encrypted_partition
+
+   Enter your passphrase
+
+   Mount the partition
+
+   # mount /dev/mapper/my_encrypted_partition /mnt/enc
+   
+   Create a dummy file inside the mount point.
+   # echo “This is Part 3 of a 12-article series about the LFCE certification” > /mnt/enc/testfile.txt
+   # cat /mnt/enc/testfile.txt
+   # umount /mnt/enc
+   
+   # cryptsetup luksClose my_encrypted_partition
+   
+Try to mount the partition as a regular file system. It should indicate an error.
+# mount /dev/sdb1 /mnt/enc
+
+
+Encryptin the Swap Space for Further Security
+
+he passphrase you entered earlier to use the encrypted partition is stored in RAM memory while it’s open. 
+If someone can get his hands on this key, he will be able to decrypt the data. This is especially easy
+to do in the case of a laptop, since while hibernating the contents of RAM are kept on the swap partition.
+
+To avoid leaving a copy of your key accessible to a thief, encrypt the swap partition following these steps:
+
+1 Create a partition to be used as swap with the appropriate size (/dev/sdd1 in our case) and
+encrypt it as explained earlier. Name it just “swap” for convenience.’
+
+2.Set it as swap and activate it.
+
+# mkswap /dev/mapper/swap
+# swapon /dev/mapper/swap
+
+3. Next, change the corresponding entry in /etc/fstab.
+
+/dev/mapper/swap none        	swap	sw          	0   	0
+
+4. Finally, edit /etc/crypttab and reboot.
+
+swap               /dev/sdd1         /dev/urandom swap
+
+
+Once the system has finished booting, you can verify the status of the swap space:
+
+# cryptsetup status swap
+
