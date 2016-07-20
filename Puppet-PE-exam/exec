@@ -1,0 +1,29 @@
+Use the exec resource type instead of Puppet code whenever possible.
+
+
+True
+--False
+Correct!
+
+The Puppet exec resource allows you to:
+
+Write modules that are inherently idempotent.
+--Access the operating system to execute commands and run scripts.
+Disregard idempotency when you write Puppet modules.
+Avoid using scripts to execute operating system commands.
+Correct!
+
+When you call a script from the exec resource, you need to ensure that the script operates idempotently.
+
+--True
+False
+Correct!
+
+Any command in an exec resource must:
+
+
+Use the `onlyif` attribute to restrict run conditions.
+Call a script in order to run operating system commands.
+Include the `path` attribute.
+--Be able to run multiple times without causing harm.
+Correct.
