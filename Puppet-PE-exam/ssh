@@ -1,0 +1,37 @@
+A Puppet class is a collection of resources that are managed as a single unit.
+++True
+False
+
+        Correct! 
+
+The main class in the saz-ssh module is:
+ssh::server::hostkey
+ssh::server
+ssh::host
+++ssh
+
+        Correct! 
+
+The main class in the saz-ssh module is declared in order to:
+
+++Configure a node as both an SSH client and an SSH server.
+Manage installation of SSH server hosts.
+Install and configure SSH authentication keys.
+Restrict access to SSH keys.
+
+        Correct! 
+
+After you install the saz-ssh module, you need to:
+Install SSH keys on all nodes in your infrastructure.
+Instruct all users to force a Puppet run on their individual nodes.
+Distribute public and private keys for all nodes, and add the keys to the hosts file.
+++Add the SSH class to your environment, and add the SSH class to a group of nodes.
+
+        Correct! 
+
+With Puppet Enterprise, you can edit and add class parameters from the Puppet Enterprise console.
+++True
+False
+
+        Correct! 
+
