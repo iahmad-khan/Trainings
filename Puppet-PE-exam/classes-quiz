@@ -1,0 +1,75 @@
+A class is made up of Puppet resources.
+
+
+--True
+False
+Correct!
+
+
+Defining a class automatically includes the class in your configuration.
+
+
+True
+--False
+Correct!
+
+
+In the following example, how many resources are being defined?
+
+class ssh { 
+  package { 'openssh-clients': 
+      ensure => present, 
+  }
+  file { '/etc/ssh/ssh_config': 
+     ensure => file,
+     owner => 'root',
+     group => 'root',
+     source => 'puppet:///modules/ssh/ssh_config',
+  } 
+   service { 'sshd': 
+     ensure => running, 
+      enable => true,
+  }
+}
+
+
+1
+2
+--3
+4
+Correct!
+
+
+In the following example, what is the title of the class? 
+
+class ssh {
+  package { 'openssh-clients':
+     ensure => present,
+  }
+  file { '/etc/ssh/ssh_config':
+     ensure => file,
+     owner => 'root',
+     group => 'root',
+     source => 'puppet:///modules/ssh/ssh_config',
+  }
+  service { 'sshd':
+     ensure => running,
+     enable => true,
+  }
+}
+
+
+--ssh
+openssh-clients
+sshd
+ssh_config
+Correct!
+
+
+
+Puppet classes are reusable and singleton.
+
+
+--True
+False
+Correct!
