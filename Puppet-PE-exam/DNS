@@ -1,0 +1,30 @@
+The directory in which you should edit your modules is /opt/puppet/share/puppet/modules.
+
+
+True
+--False
+Correct!
+
+The name of the Puppet DNS template file is:
+
+
+DNS.conf.pp
+DNS.template.erb
+--resolve.conf.erb
+resolve.template.pp
+Correct!
+
+
+Resolver parameters should always be set in the resolver.conf file.
+
+
+True
+--False
+Correct!
+
+The local node copy of the nameserver file is the basis for desired state enforcement.
+
+
+True
+--False
+Correct!
