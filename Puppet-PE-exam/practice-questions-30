@@ -1,0 +1,214 @@
+
+
+1) The Puppet installation process fails due to a configuration error. How might you recover from the failed install?
+
+Correct
+Correct answer
+
+Fix the configuration issue and run ./puppet-enterprise-uninstaller
+
+2) Given the following resource definition what would be the expected result when the Puppet agent is run? exec { "echo tests >> /etc/motd": path => "/bin", }
+
+Correct
+Correct answer
+
+Each time the agent is run "tests" would be appended to the motd
+
+3) What is the location of the answer file created by the Puppet Enterprise installer?
+
+Correct
+Correct answer
+
+/opt/puppet/share/installer/answers
+
+4) # File: Puppet Manifest host { 'sles11a': name => 'sles11a.puppetlabs.com', ip => '10.20.1.77', host_aliases => ['zypper'], } host { 'centos64c': ip => '10.20.1.74', } host { 'server2008r2b': ip => '10.20.1.80', comment => 'windows', } # File: Original /etc/hosts 127.0.0.1 localhost 10.20.1.62 sles11a zypper # primary mirror 10.20.1.74 centos64c # decomissioned 10.20.1.80 server2008r2b 10.20.1.77 sles11a.puppetlabs.com After using Puppet to apply the manifest shown above, which two entries in the /etc/hosts file will remain unchanged?
+
+Correct
+Correct answer
+
+10.20.1.62 sles11a zypper # primary mirror, 10.20.1.74 centos64c # decomissioned
+
+5) During the Puppet Enterprise installation process, you are instructed to open the GUI install page. However, the page is non-responsive and does not load. What might you need to do in order to access the GUI installation guide?
+
+Correct
+Correct answer
+
+Ensure that port 3000 and 443 is open and accessible on the Puppet master
+
+6) $title = "my title" node /^webserver\d{1}.mylabserver.com$/ { $title = "new title" include ntp include apache } node "webserver01.mylabserver.com" { $title = "the title" include mysql include common } Given the above code, if $title is used within a class, what would the value of the variable be if the node's certificate name is webserver01.mylabserver.com?
+
+Correct
+Correct answer
+
+the title
+
+7) True or False: Selector expressions can be used within a case statements case.
+
+Correct
+Correct answer
+
+False
+
+8) Given the following Puppet code what value would you expect $server to have when executed in the notify resource?: node "webserver.mylabserver.com" { $server = "10.0.0.1" class { 'ntp' : server = "10.0.0.2", } } class ntp ($server = "localhost") { notify ("The value of the server variable is ${server}":) }
+
+Correct
+Correct answer
+
+10.0.0.2
+
+9) Which of the following classes will be executed on the node "webserver01.mylabserver.com" based on the following code?: node /^webserver\d{01}.mylabserver.com$/ { include ntp include apache } node "webserver01.mylabserver.com" { include mysql include common }
+
+Correct
+Correct answer
+
+mysql, common
+Explanation
+
+Even though the certificate name is webserver, puppet first looks for exact node definition matches, then if the name does not match it will attempt to evaluate a regular expression.
+
+10) Given the following resource type definition, what is suppose to occur during Puppet enforcement?: file { '/etc/motd': path => '/etc/motd.txt', source => 'puppet:///modules/motd/motd', } Note: The assumption on this question is that the file on the system does not match the contents of the file on the Puppet master and a Puppet enforcement WILL occur.
+
+Correct
+Correct answer
+
+The /etc/motd.txt file will be replaced with the motd file located in the modules/motd/files/ directory by the file named motd
+
+11) In your data center, servers have either 16 GB or 64 GB of memory. You are writing a Puppet module to manage a system service and you want to use different command-line arguments depending on how much memory the machine has. Which three Puppet syntax constructs would you use to allow the behavior of your service resource to change?
+
+Correct
+Correct answer
+
+if statement, selector, case statement
+
+12) You are managing a system with a modulepath of /etc/puppetlabs/puppet/modules. In which file will the autoloader look for the class definition for the ssh::server::keys class?
+
+Correct
+Correct answer
+
+/etc/puppetlabs/puppet/modules/ssh/manifests/server/keys.pp
+
+13) What evaluation operator would you use to evaluate a regular expression?
+
+Correct
+Correct answer
+
+=~
+
+14) When using Facter, which parameter will load additional facts distributed by Puppet?
+
+Correct
+Correct answer
+
+facter -p
+
+15) Which statement is true about classes?
+
+Correct
+Correct answer
+
+Classes are singleton and will only ever be evaluated once
+
+16) When deactivating an enterprise Puppet agent, the command [~$] puppet node deactivate does what?
+
+Correct
+Correct answer
+
+Removes the node from PuppetDB and frees up a license
+
+17) When does a failure event occur in the event inspector?
+
+Correct
+Correct answer
+
+If a property is out of sync, when Puppet attempt to make changes, the changes failed.
+
+18) True or False: If a node matches multiple node definitions due to regular expressions, Puppet will use ONE of them with no guarantee as to which one it will use.
+
+Correct
+Correct answer
+
+True
+
+19) Reports available form within the console, provide which of the following information?
+
+Correct
+Correct answer
+
+Total number of resources managed, Total number of resources changed for each run, Runtime for the puppet agent run
+
+20) $title = "my title" node /^webserver\d{1}.mylabserver.com$/ { $title = "new title" include ntp include apache } node "webserver01.mylabserver.com" { $title = "the title" include mysql include common } class mysql { $title = "mysql title" notify { "The variable name is ${::title}": } } Given the above code, what variable value will be displayed in the notify resource if the node's certificate name is webserver01.mylabserver.com?
+
+Incorrect
+Correct answer
+
+my title
+
+21) You want to publish a module to the Puppet Forge. Which file is required?
+
+Correct
+Correct answer
+
+Modulefile
+
+22) Which three are included in a Puppet agent run report?
+
+Correct
+Correct answer
+
+The total number of resources managed, The time taken to retrieve the configuration, The number of resources changed
+
+23) True or False: The Puppet master and Console can be installed on separate servers.
+
+Correct
+Correct answer
+
+True
+
+24) # File: Puppet Manifest host { 'sles11a': name => 'sles11a.puppetlabs.com', ip => '10.20.1.77', host_aliases => ['zypper'], } host { 'centos64c': ip => '10.20.1.75', } host { 'server2008r2b': ip => '10.20.1.80', comment => 'windows', } # File: Original /etc/hosts 127.0.0.1 localhost 10.20.1.62 sles11a zypper # primary mirror 10.20.1.74 centos64c # decomissioned 10.20.1.80 server2008r2b 10.20.1.77 sles11a.puppetlabs.com What is the expected value of the resource with name of centos64c?
+
+Correct
+Correct answer
+
+10.20.1.75 centos64c # decomissioned
+
+25) Which of the following is true about module AND class names?
+
+Correct
+Correct answer
+
+Must begin with a lowercase letter, Can include numbers and underscores but not start with them
+
+26) Which of the following are metaparameter types?
+
+Correct
+Correct answer
+
+notify, schedule
+
+27) If refreshonly is set to true, the exec will only run when it receives an event. This is the most reliable way to use refresh with execs.
+
+Correct
+Correct answer
+
+True
+
+28) Which of the following commands will show what files that belong to a Puppet Forge module have been modified since the module's installation?
+
+Correct
+Correct answer
+
+puppet module changes
+
+29) Your console database size is increasing over a short period of time because new reports are being generated by recently added nodes. You determine that you have adequate storage space for up to one month of reports. What should you do to reduce the space required to store reports?
+
+Correct
+Correct answer
+
+Use the reports:prune task in the console's Rake API to clean reports older than 30 days.
+
+30) Given the following code, what is the expected result?: file { 'demo': ensure => file, path => '/home/user/test', content => 'testing', } file { 'demo': ensure => file, path => '/home/user/tests', content => 'testing', }
+
+Correct
+Correct answer
+
+Puppet compilation error due to duplicate resource name on the same reso
