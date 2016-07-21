@@ -1,0 +1,45 @@
+By default, a Puppet agent checks in with the Puppet master every:
+
+
+--30 minutes 
+60 minutes
+10 minutes
+120 minutes
+
+Correct!
+
+Puppet lets you specify a desired state for your infrastructure.
+
+
+--True
+False
+
+Correct!
+
+What has occurred when a node does not match the desired state?
+
+
+out-of-sync
+failed state
+--configuration drift
+node divergence
+
+Correct!
+
+What does the node, or Puppet agent, send to the Puppet master when it checks in?
+
+
+--facts
+resources
+variables
+manifests
+
+Correct!
+
+The Puppet agent compiles a report that it sends to the Puppet master after its run.
+
+
+--True
+False
+
+Correct!
