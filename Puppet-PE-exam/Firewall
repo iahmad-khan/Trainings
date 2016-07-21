@@ -1,0 +1,40 @@
+The firewall rules are prioritized in which order? Select the single best answer.
+
+
+Pre, post
+Service rules, pre, post
+--Pre, service rules, post
+Pre, my_master, post
+Correct!
+
+The local firewall rules may override group rules under certain circumstances.
+
+
+True
+--False
+Correct.
+
+What is the purpose of the post rule?
+
+
+--It closes any ports that are left open and drops all packets not explicitly allowed by higher level rules.
+ It open ports for special cases that are closed by higher level rules.
+ It drops all packets and closes all ports.
+Correct!
+
+
+The Puppet Master is exempt from firewall rules.
+
+
+True
+--False
+Correct!
+
+If they are present, which of the following rules are included in the firewall policy? Select all that apply
+
+
+Pre
+Post
+My_firewall
+--Any service rule
+Correct!
