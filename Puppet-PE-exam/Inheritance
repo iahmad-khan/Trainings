@@ -1,0 +1,37 @@
+The Puppet keyword used to extend the functionality of a class is called:
+
+extend
+declare
+--inherits
+include
+Correct!
+
+When the derived (inherited) class is declared, its base class is automatically declared first.
+
+--True
+False
+Correct.
+
+
+You have a base class called `ssh` that you need to extend. The new class will be called `ssh::paranoid`. Which of the following is the correct syntax for the first line of the `paranoid` class? (Multiple answers are allowed.)
+
+class paranoid extends ssh {
+class paranoid inherits ssh {
+class ssh declares paranoid {
+--class ssh::paranoid inherits ssh {
+Correct!
+
+
+Inheritance should be used within a module to reduce repetition.
+
+--True
+False
+Correct!
+
+
+It is considered a best practice to use inheritance across modules.
+
+
+True
+--False
+Correct!
