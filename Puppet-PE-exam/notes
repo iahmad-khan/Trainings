@@ -59,3 +59,26 @@ if $::osfamily == 'Debian' { [ ... ] }
  if $::uptime_days > 365 { [ ... ] }
 
  if $::operatingsystemrelease <= 6 { [ ... ] }
+ 
+ 
+ Comparing strings: in operator and combinations
+in operator
+
+The in operator checks if a string present in another string, an array or in the keys of an hash
+
+if '64' in $::architecture
+
+ if $monitor_tool in [ 'nagios' , 'icinga' , 'sensu' ]
+
+Expressions combinations
+
+It's possible to combine multiple comparisons with and and or
+
+if ($::osfamily == 'RedHat')
+and ($::operatingsystemrelease == '5') {
+   [ ... ]
+}
+
+if ($::osfamily == 'Debian') or ($::osfamily == 'RedHat') {
+   [ ...]
+}
