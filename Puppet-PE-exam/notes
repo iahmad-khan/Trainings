@@ -18,3 +18,34 @@ more than one for complex patterns matching.
 
 unless is somehow the opposite of if. It evaluates a boolean condition and if it's 
 false it executes a block of code. It doesn't have elsif / else clauses.
+
+
+
+Selector for variable's assignement
+
+$package_name = $osfamily ? {
+   'RedHat' => 'httpd',
+   'Debian' => 'apache2',
+   default  => undef,
+ }
+
+case
+
+case $::osfamily {
+   'Debian': { $package_name = 'apache2' }
+   'RedHat': { $package_name = 'httpd' }
+   default: { notify { "Operating system $::operatingsystem not supported" } }
+ }
+
+if elsif else
+
+if $::osfamily == 'Debian' {
+   $package_name = 'apache2'
+ } elsif $::osfamily == 'RedHat' {
+   $package_name = 'httpd'
+ } else {
+   notify { "Operating system $::operatingsystem not supported" }
+ }
+ 
+ 
+ 
