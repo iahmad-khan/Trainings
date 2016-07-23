@@ -147,3 +147,21 @@ ACTIONS:
   upgrade      Upgrade a puppet module.
   
   
+  
+Paths of a module
+
+Modules have a standard structure:
+
+mysql/            # Main module directory
+
+mysql/manifests/  # Manifests directory. Puppet code here. Required.
+mysql/lib/        # Plugins directory. Ruby code here
+mysql/templates/  # ERB Templates directory
+mysql/files/      # Static files directory
+mysql/spec/       # Puppet-rspec test directory
+mysql/tests/      # Tests / Usage examples directory
+
+mysql/Modulefile  # Module's metadata descriptor
+
+This layout enables useful conventions
+
