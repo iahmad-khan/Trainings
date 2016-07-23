@@ -48,4 +48,14 @@ if $::osfamily == 'Debian' {
  }
  
  
- 
+ Comparing strings: operators
+
+Puppet supports some common comparison operators: == != < > <= >= =~ !~ and the somehow less common in
+
+if $::osfamily == 'Debian' { [ ... ] }
+
+ if $::kernel != 'Linux' { [ ... ] }
+
+ if $::uptime_days > 365 { [ ... ] }
+
+ if $::operatingsystemrelease <= 6 { [ ... ] }
