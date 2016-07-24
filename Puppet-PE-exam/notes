@@ -213,3 +213,98 @@ source => 'puppet:///modules/mysql/my.cnf'
 # File is in: $modulepath/mysql/files/my.cnf
 
 
+
+
+Modules paths conventions
+
+Classes and defines autoloading:
+
+include mysql
+# Main mysql class is placed in: $modulepath/mysql/manifests/init.pp
+
+include mysql::server
+# This class is defined in: $modulepath/mysql/manifests/server.pp
+
+mysql::conf { ...}
+# This define is defined in: $modulepath/mysql/manifests/conf.pp
+
+include mysql::server::ha
+# This class is defined in: $modulepath/mysql/manifests/server/ha.pp
+
+Provide files based on Erb Templates (Dynamic content)
+
+content => template('mysql/my.cnf.erb'),
+# Template is in: $modulepath/mysql/templates/my.cnf.erb
+
+Provide static files (Static content). Note we can't use content AND source for the same file.
+
+source => 'puppet:///modules/mysql/my.cnf'
+# File is in: $modulepath/mysql/files/my.cnf
+
+
+
+Erb templates
+
+Files provisioned by Puppet can be Ruby ERB templates
+
+In a template all the Puppet variables (facts or user assigned) can be used :
+
+# File managed by Puppet on <%= @fqdn %>
+search <%= @domain %>
+
+But also more elaborated Ruby code
+
+<% @dns_servers.each do |ns| %>
+nameserver <%= ns %>
+<% end %>
+
+The computed template content is placed directly inside the catalog
+(Sourced files, instead, are retrieved from the puppetmaster during catalog application)
+
+
+
+
+Principes behind a Reusable Module
+
+Data Separation
+
+- Configuration data is defined outside the module
+- Module behavior can be managed via parameters
+- Allow module's extension and override via external data
+
+Reusability
+
+- Support different OS. Easily allow new additions.
+- Customize behavior without changing module code
+- Do not force author idea on how configurations should be provided
+
+Standardization
+
+- Follow PuppetLabs style guidelines (puppet-lint)
+- Have coherent, predictable and intuitive interfaces
+- Provide contextual documentation (puppet-doc)
+
+Interoperability
+
+- Limit cross-module dependencies
+- Allow easy modules cherry picking
+- Be self contained, do not interfere with other modules' resources
+
+
+
+Modules reusability patterns: Template + Options hash
+
+Check this blog post for details.
+
+Classes and defines should expose parameters that allow to override the used templates and set a custom hash of configurations.
+
+class redis (
+  $config_file_template = 'redis/redis.conf.erb',
+  $options_hash         = {},
+) {
+  file { '/etc/redis/redis.conf':
+    content => template($config_file_template),
+  }
+}
+
+
