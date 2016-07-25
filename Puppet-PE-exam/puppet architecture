@@ -1,0 +1,34 @@
+Puppet architectures - Overview
+
+The Components of a Puppet architecture
+Where to define classes
+Where to define parameters
+Where to place files
+Puppet security
+
+
+Components of a Puppet architecture
+
+Tasks we deal with
+Definition of the classes to be included in each node
+
+Definition of the parameters to use for each node
+
+Definition of the configuration files provided to the nodes
+
+Components
+/etc/puppet/manifests/site.pp - The default manifests loaded by the Master
+
+ENC - The (optional) Enternal Node Classifier
+
+ldap - (Optional) LDAP backend
+
+Hiera - Data key-value backend
+
+Public modules - Public shared modules
+
+Site modules - Local custom modules
+
+
+
+
