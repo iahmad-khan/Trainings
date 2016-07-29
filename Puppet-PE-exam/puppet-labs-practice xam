@@ -28,6 +28,7 @@ class ssh {
 }
 *This question is required.
 
+
 package {'ssh':
     ensure  => installed,
     require => File['/etc/ssh/sshd_config'],
@@ -196,7 +197,7 @@ class haproxy::config ( $backends ) {
 git clone git://forge.puppetlabs.com/elasticsearch/logstash
 puppet module install elasticsearch/logstash
 puppet module install elasticsearch/puppet-logstash
-puppet module install elasticsearch-logstash
+--puppet module install elasticsearch-logstash
 
 
 
@@ -211,7 +212,7 @@ Where in the sudo module directory is this file located? *This question is requi
 sudo/templates/sudoers.pp
 sudo/sudoers.erb
 sudo/files/sudoers.erb
-sudo/templates/sudoers.erb
+--sudo/templates/sudoers.erb
 
 
 
@@ -228,12 +229,15 @@ a custom user provider
 a custom user type
 a custom user class
 a custom user fact
+
+
+
 8. What are three reasons to use a custom function? (Choose three.) *This question is required.
-to move complex code logic into Ruby to keep manifests clean
+--to move complex code logic into Ruby to keep manifests clean
 to execute Ruby code on the agent to retrieve data from another system
-to convert data from one form to another
+--to convert data from one form to another
 to retrieve data from the agent during compile
-to execute Ruby code on the master to retrieve data from another system
+--to execute Ruby code on the master to retrieve data from another system
 
 
 
@@ -246,7 +250,7 @@ puppet agent --test --environment production
 *This question is required.
 development
 testing
-production
+--production
 master
 
 
@@ -259,16 +263,18 @@ Error: Could not find a suitable provider for package
 What is the problem regarding the core type package?
 
   *This question is required.
-The package type does not ship a provider that supports your agent's operating system or you are missing an application prerequisite on the agent.
+--The package type does not ship a provider that supports your agent's operating system or you are missing an application prerequisite on the agent.
 The package type could not find a suitable installation candidate for that package zsh.
 The package type does not ship a provider that supports your master's operating system or you are missing an application prerequisite on the master.
 There is a Puppet language syntax error in your use of the package type.
+
+
 11. You have just deployed several new nodes in your infrastructure and run the Puppet agent command with the --waitforcert argument.
 
 Which two commands would you execute on a CA master to verify that the client certificate requests and establishes trust between the new agents and the master? (Choose two.) *This question is required.
-puppet cert sign
+--puppet cert sign
 puppet cert revoke
-puppet cert list
+--puppet cert list
 puppet cert inventory
 
 
@@ -278,6 +284,7 @@ puppet cert inventory
 
 Which two class definitions would cause an error in catalog compilation? (Choose two.) *This question is required.
 
+--
 class profile::webserver {
   contain apache
   class { 'apache':
@@ -298,7 +305,8 @@ class profile::webserver {
   }
   contain apache
 }
- 
+
+-- 
 class profile::webserver {
   include apache
   class { 'apache':
@@ -313,25 +321,25 @@ Which method of classification will achieve this result? *This question is requi
 Use node files in the manifests directory.
 Use the hiera_hash() function.
 Use the PE Node Manager.
-Use a custom ENC.
+--Use a custom ENC.
 
 
 14. Which statement describes a capability of the Puppet Enterprise console's Event Inspector? *This question is required.
 Show all nodes with all historical failures.
 Show all functions with all historical failures.
-Show all nodes with recent failures.
+--Show all nodes with recent failures.
 Show all functions with recent failures.
 
 15. Which two capabilities are enabled by the use of storeconfigs in conjunction with PuppetDB? (Choose two.) *This question is required.
-use of exported resources
-central location to query for all known data about Puppet-managed nodes
+--use of exported resources
+--central location to query for all known data about Puppet-managed nodes
 displaying reports in the Puppet Enterprise console
 storing the certificates signed by the Puppet certificate authority
 
 16. You have made a change to the Puppet code that manages your CentOS nodes.
 How would you use MCollective from the command line to trigger a Puppet run on all your CentOS nodes? *This question is required.
 mco puppet runonce CentOS
-mco puppet runonce --wf operatingsystem=CentOS
+--mco puppet runonce --wf operatingsystem=CentOS
 mco puppet runonce -f operatingsystem=CentOS
 mco puppet runonce -f operatingsystem -v CentOS
 
@@ -341,5 +349,5 @@ mco puppet runonce -f operatingsystem -v CentOS
 spec
 files
 manifests
-lib
+--lib
 templates
