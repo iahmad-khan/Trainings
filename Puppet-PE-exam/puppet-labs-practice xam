@@ -1,0 +1,345 @@
+Puppet Professional Practice Exam (PPT-203)
+Practice Exam
+There was an error on your page. Please correct any required fields and submit again. Go to the first error
+Thank you for your interest in the Puppet Professional Certification! The following is a practice test designed to give you an idea of the types of questions you will find on the certification exam. Please note that this is not a reliable indicator of your anticipated performance on the certification exam.
+
+Please provide an answer for each question and then click the submit button. Your practice test will be instantly scored and we will let you know your percentage of correct responses.
+
+
+1. Referring to the following exhibit, which resource change will correct the cyclical dependency?
+ 
+class ssh {
+  package {'ssh':
+    ensure  => present,
+    require => Service['sshd'],
+  }  
+
+  service { 'sshd':
+    ensure    => running,
+    enable    => true,
+    subscribe => File['/etc/ssh/sshd_config'],
+  }
+
+  file { '/etc/ssh/sshd_config':
+    ensure  => present,
+    mode    => '0644',
+    require => Package['ssh'],
+  }
+}
+*This question is required.
+
+package {'ssh':
+    ensure  => installed,
+    require => File['/etc/ssh/sshd_config'],
+}
+ 
+package {'ssh':
+  ensure => installed,
+}
+ 
+service {'sshd':
+  ensure => running,
+  enable => true,
+  before => Package['ssh'],
+}
+ 
+file {'/etc/ssh/sshd_config':
+  ensure => present,
+  mode   => '0644',
+  before => Package['ssh'],
+}
+
+
+
+
+2. Which two actions might be taken using only the core types? (Choose two.) *This question is required.
+Ensure a package is installed on a system.
+Create an instance in AWS.
+Manage POSIX groups.
+Concatenate two file fragments to make a whole.
+3. In the exhibit below, the template haproxy.cfg.erb will use an array stored in the local variable $backends to create a list of servers inside haproxy.cfg in the resulting file. What are two ways to modify the exhibit to be able to supply the $backends variable to the template? (Choose two.)
+# haproxy/manifests/init.pp
+class haproxy {
+
+  class { 'haproxy::config': } ->
+  class { 'haproxy::service':}
+
+  contain haproxy::package
+  contain haproxy::config
+  contain haproxy::service
+}
+
+# haproxy/manifests/config.pp
+class haproxy::config {
+
+  file { 'haproxy.cfg':
+    ensure  => present,
+    path    => '/etc/haproxy/haproxy.cfg',
+    content => template('haproxy/haproxy.cfg.erb'),
+    mode    => '0644',
+    owner   => 'root',
+    group   => 'root,
+  }
+
+}
+*This question is required.
+
+#haproxy/manifests/init.pp
+class ( $backends ) haproxy {
+  class { 'haproxy::package': } ->
+  class { 'haproxy::config':
+    backends => $backends,
+  } ->
+  class { 'haproxy::service':}
+  
+  contain haproxy::package
+  contain haproxy::config
+  contain haproxy::service
+}
+
+# haproxy/manifests/config.pp
+class ( $backends ) haproxy::config {
+  file { 'haproxy.cfg':
+    ensure  => present,
+    path    => '/etc/haproxy/haproxy.cfg',
+    content => template('haproxy/haproxy.cfg.erb'),
+    mode    => '0644',
+    owner   => 'root',
+    group   => 'root',
+  }
+}
+ 
+#haproxy/manifests/init.pp
+class haproxy ( $backends ) {
+  class { 'haproxy::package': } ->
+  class { 'haproxy::config':
+    backends => $backends,
+  } ->
+  class { 'haproxy::service':}
+  
+  contain haproxy::package
+  contain haproxy::config
+  contain haproxy::service
+}
+
+# haproxy/manifests/config.pp
+class haproxy::config ( $backends ) {
+  file { 'haproxy.cfg':
+    ensure  => present,
+    path    => '/etc/haproxy/haproxy.cfg',
+    content => template('haproxy/haproxy.cfg.erb'),
+    mode    => '0644',
+    owner   => 'root',
+    group   => 'root',
+  }
+}
+ 
+#haproxy/manifests/init.pp
+class (
+  $backends = $haproxy::params::default_backends
+) haproxy inherits haproxy::params {
+  class { 'haproxy::package': } ->
+  class { 'haproxy::config':
+    backends => $backends,
+  } ->
+  class { 'haproxy::service':}
+  
+  contain haproxy::package
+  contain haproxy::config
+  contain haproxy::service
+}
+
+# haproxy/manifests/config.pp
+class ( $backends ) haproxy::config {
+  file { 'haproxy.cfg':
+    ensure  => present,
+    path    => '/etc/haproxy/haproxy.cfg',
+    content => template('haproxy/haproxy.cfg.erb'),
+    mode    => '0644',
+    owner   => 'root',
+    group   => 'root',
+  } 
+
+}
+ 
+#haproxy/manifests/init.pp
+class haproxy (
+  $backends = $haproxy::params::default_backends
+) inherits haproxy::params {
+  class { 'haproxy::package': } ->
+  class { 'haproxy::config':
+    backends => $backends,
+  } ->
+  class { 'haproxy::service': }
+
+  contain haproxy::package
+  contain haproxy::config
+  contain haproxy::service
+}
+
+# haproxy/manifests/config.pp
+class haproxy::config ( $backends ) {
+  file { 'haproxy.cfg':
+    ensure  => present,
+    path    => '/etc/haproxy/haproxy.cfg',
+    content => template('haproxy/haproxy.cfg.erb'),
+    mode    => '0644',
+    owner   => 'root',
+    group   => 'root',
+  }
+}
+
+
+
+
+4. You want to install the logstash module from the elasticsearch user on the Puppet Forge. Which two commands would you use to accomplish this task? (Choose two.) *This question is required.
+git clone git://forge.puppetlabs.com/elasticsearch/logstash
+puppet module install elasticsearch/logstash
+puppet module install elasticsearch/puppet-logstash
+puppet module install elasticsearch-logstash
+
+
+
+5. You are reviewing a colleague's sudo module and want to make changes to the /etc/sudoers file being created in the following snippet:
+file { '/etc/sudoers':
+  ensure  => present,
+  content => template('sudo/sudoers.erb'),
+  owner   => 'root',
+  group   => 'root',
+}
+Where in the sudo module directory is this file located? *This question is required.
+sudo/templates/sudoers.pp
+sudo/sudoers.erb
+sudo/files/sudoers.erb
+sudo/templates/sudoers.erb
+
+
+
+
+6. You want to implement class-based ordering in a Puppet module.
+
+What are two possible strategies to accomplish this task? (Choose two.) *This question is required.
+Use the contain function.
+Specify dependencies with include at the top of every manifest.
+Specify class ordering in the module's metadata.json file.
+Use the anchor pattern.
+7. What would be found in the file {module}/lib/puppet/provider/user/custom_user.rb? *This question is required.
+a custom user provider
+a custom user type
+a custom user class
+a custom user fact
+8. What are three reasons to use a custom function? (Choose three.) *This question is required.
+to move complex code logic into Ruby to keep manifests clean
+to execute Ruby code on the agent to retrieve data from another system
+to convert data from one form to another
+to retrieve data from the agent during compile
+to execute Ruby code on the master to retrieve data from another system
+
+
+
+9. Given the puppet.conf configuration and puppet agent invocation shown in the following exhibit, for which environment will the agent run occur? 
+# puppet.conf
+[agent]
+   environment = testing
+# command invocation
+puppet agent --test --environment production
+*This question is required.
+development
+testing
+production
+master
+
+
+
+
+10. When installing the package zsh with the package type, the Puppet agent sends the following error:
+
+Error: Could not find a suitable provider for package
+
+What is the problem regarding the core type package?
+
+  *This question is required.
+The package type does not ship a provider that supports your agent's operating system or you are missing an application prerequisite on the agent.
+The package type could not find a suitable installation candidate for that package zsh.
+The package type does not ship a provider that supports your master's operating system or you are missing an application prerequisite on the master.
+There is a Puppet language syntax error in your use of the package type.
+11. You have just deployed several new nodes in your infrastructure and run the Puppet agent command with the --waitforcert argument.
+
+Which two commands would you execute on a CA master to verify that the client certificate requests and establishes trust between the new agents and the master? (Choose two.) *This question is required.
+puppet cert sign
+puppet cert revoke
+puppet cert list
+puppet cert inventory
+
+
+
+
+12. The class profile::webserver is to be assigned to a node.
+
+Which two class definitions would cause an error in catalog compilation? (Choose two.) *This question is required.
+
+class profile::webserver {
+  contain apache
+  class { 'apache':
+    listen_address => '192.168.1.5',
+  }
+}
+ 
+class profile::webserver {
+  class { 'apache':
+    listen_address => '192.168.1.5',
+  }
+  include apache
+}
+ 
+class profile::webserver {
+  class { 'apache':
+    listen_address => '192.168.1.5',
+  }
+  contain apache
+}
+ 
+class profile::webserver {
+  include apache
+  class { 'apache':
+    listen_address => '192.168.1.5',
+  }
+}
+
+
+
+13. You are asked to integrate a CMDB containing all the information about every host in your environment to Puppet for the purpose of classification.
+Which method of classification will achieve this result? *This question is required.
+Use node files in the manifests directory.
+Use the hiera_hash() function.
+Use the PE Node Manager.
+Use a custom ENC.
+
+
+14. Which statement describes a capability of the Puppet Enterprise console's Event Inspector? *This question is required.
+Show all nodes with all historical failures.
+Show all functions with all historical failures.
+Show all nodes with recent failures.
+Show all functions with recent failures.
+
+15. Which two capabilities are enabled by the use of storeconfigs in conjunction with PuppetDB? (Choose two.) *This question is required.
+use of exported resources
+central location to query for all known data about Puppet-managed nodes
+displaying reports in the Puppet Enterprise console
+storing the certificates signed by the Puppet certificate authority
+
+16. You have made a change to the Puppet code that manages your CentOS nodes.
+How would you use MCollective from the command line to trigger a Puppet run on all your CentOS nodes? *This question is required.
+mco puppet runonce CentOS
+mco puppet runonce --wf operatingsystem=CentOS
+mco puppet runonce -f operatingsystem=CentOS
+mco puppet runonce -f operatingsystem -v CentOS
+
+
+
+17. Which sub-directory of a module will be synced using pluginsync from the master to the agent? *This question is required.
+spec
+files
+manifests
+lib
+templates
