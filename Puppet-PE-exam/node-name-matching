@@ -1,0 +1,22 @@
+A given node will only get the contents of one node definition, even if two node statements 
+could match a node’s name. Puppet will do the following checks in order when deciding which definition to use:
+
+If there is a node definition with the node’s exact name, Puppet will use it.
+If there is a regular expression node statement that matches the node’s name, Puppet will use it.
+(If more than one regex node matches, Puppet will use one of them, with no guarantee as to which.)
+If the node’s name looks like a fully qualified domain name (i.e. multiple period-separated groups of letters, 
+numbers, underscores and dashes), Puppet will chop off the final group and start again at step 1.
+(That is, if a definition for www01.example.com isn’t found, Puppet will look for a definition matching www01.example.)
+Puppet will use the default node.
+Thus, for the node www01.example.com, Puppet would try the following, in order:
+
+www01.example.com
+A regex that matches www01.example.com
+www01.example
+A regex that matches www01.example
+www01
+A regex that matches www01
+default
+You can turn off this fuzzy name matching by changing the Puppet master’s strict_hostname_checking 
+setting to true. This will cause Puppet to skip step 3 and only use the node’s full name before resorting 
+to default
