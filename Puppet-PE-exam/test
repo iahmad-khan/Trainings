@@ -1,0 +1,843 @@
+
+
+
+
+
+1) Given the following information, what classes would you expect to be declared on the node?: certname "webserver1.mylabserver.com" node /^webserver\d{1}.mylabserver.com$/ { include roles::webserver } node /^webserver\d{1}.mylabserver$/ { include roles::apache } node "webserver1.mylabserver" { include roles::apache } node "webserver1" { include roles::nginx } node default { include base }
+Correct
+
+Correct answer
+roles::webserver
+
+2) When does a failure event occur in the event inspector?
+Correct
+
+Correct answer
+If a property is out of sync, when Puppet attempt to make changes, the changes failed.
+
+3) Hiera data files are case sensitive to what they are matching. For example if the osfamily is RedHat the data file needs to match RedHat.yaml and not just redhat.yaml
+Correct
+
+Correct answer
+True
+
+4) If webserver01 is classified both inside a node group on the console and within site.pp, given the following configurations, what would you expect the output to be for a puppet agent run?: #Node group console configuration $variable = "hello world" #site.pp standard node definition $variable = "Linux Academy" node "webserver01.mylabserver.com" { } #end site.pp definition
+Correct
+
+Correct answer
+compiling error due to reassigning variables at the same scope level
+
+5) You are removing an old node from your Puppet master. Which command would you use to remove all the certificate information associated with the node that is on the Puppet master? The certificate name of the node you are removing is webserver10.mylabserver.com.
+Correct
+
+Correct answer
+puppet cert clean webserver10.mylabserver.com
+
+6) Which of the following are acceptable module names?
+Correct
+
+Correct answer
+main_module, module14
+
+7) Case statements do not require a default match and, if a condition is not met, compiling WILL NOT fail; however, it is best practice to have a default to avoid other issues.
+Correct
+
+Correct answer
+True
+
+8) Which setting should be present in a Puppet agent's puppet.conf [agent] section to enable submission of agent report logs to a Puppet master?
+Correct
+
+Correct answer
+report = true
+
+9) Which of the following classes will be executed on the node "webserver01.mylabserver.com" based on the below code?: node /^webserver\d{2}.mylabserver.com$/ { include ntp include apache } node "webserver01.mylabserver" { include mysql include common } default { include core }
+Correct
+
+Correct answer
+ntp, apache
+
+10) In which module sub-directory would you place custom facts to have them synchronized using plugin sync?
+Correct
+
+Correct answer
+lib/facter
+
+11) Given the following code, what is the expected result?: file { 'demo': ensure => file, path => '/home/user/test', content => 'testing', } file { 'demo': ensure => file, path => '/home/user/tests', content => 'testing', }
+Correct
+
+Correct answer
+Puppet compilation error due to duplicate resource name on the same resource type
+
+12) With regard to node classification, what is the agent's node name by default?
+Correct
+
+Correct answer
+certname
+
+13) If the unless attribute is set, then the exec will run unless the command has an exit code of 0.
+Incorrect
+
+Correct answer
+True
+
+14) Given the following code, what will the variable $0 output for a host with a hostname of "www01"?: $hostname = "webhead01" node "www01" { $hostname = "webserver01" include welcome } class welcome { if $::hostname =~ /^www(\d+)/ { notice("you have arrived at server $0 ") } }
+Incorrect
+
+Correct answer
+you have arrived at server www01
+
+15) Which of the following are metaparameters?
+Correct
+
+Correct answer
+subscribe, notify, before
+
+16) True or False: Any Puppet setting that's valid in the configuration file is also a valid long argument. i.e puppet agent --server puppetmaster.mylabserver.com
+Correct
+
+Correct answer
+True
+
+17) If a resource receives multiple refresh events, they will be combined and the resource will only refresh once.
+Correct
+
+Correct answer
+True
+
+18) Given the following resource definition what would be the expected result when the Puppet agent is run? exec { "echo tests >> /etc/motd": path => "/bin", }
+Incorrect
+
+Correct answer
+Each time the agent is run "tests" would be appended to the motd
+
+19) puppet-enterprise-installer -s ./install-answers.txt Given the following command, which two parameters should be substituted to have the installer consume the answers in the install-answers file? (Choose two.) puppet-enterprise-installer ./install-answers.txt *
+Incorrect
+
+Correct answer
+-a, -A
+
+20) Why is Puppet idempotent?
+Correct
+
+Correct answer
+The Puppet catalog can safely be applied multiple times
+
+21) You are managing a system with a modulepath of /etc/puppetlabs/puppet/modules. In which file will the autoloader look for the class definition for the ssh::server::keys class?
+Correct
+
+Correct answer
+/etc/puppetlabs/puppet/modules/ssh/manifests/server/keys.pp
+
+22) Given the following resource definition what would be the expected result when the Puppet agent is run? exec { "echo tests1 >> /etc/motd": path => "/bin:/usr/bin", onlyif => "test -f /etc/motd", }
+Correct
+
+Correct answer
+onlyif makes exec idempotent and the exec command will only be executed if the /etc/motd file does exist
+
+23) Given the following Puppet code what value would you expect $server to have when executed in the notify resource?: node "webserver.mylabserver.com" { $server = "10.0.0.1" class { 'ntp' : } } class ntp ($server = "localhost") { notify ("The value of the server variable is ${server}":) }
+Correct
+
+Correct answer
+localhost
+
+24) Given the following code and a node running the environment name "dev" and a hostname of webserver01.mylabserver.com what will the URL value be?: $confdir/hiera.yaml file -- :backends: - yaml :yaml: :datadir: /etc/puppet/hieradata :hierarchy: - “%{certname}" - "%{environment}" - common Given the following Hiera data #common.yaml url: www.mydomain.com #dev.yaml url: dev.mydomain.com #production.yaml url: mydomain.com #webserver01.mylabserver.com.yaml url: webserver.mydomain.com class show_url { $url = hiera_array('url') }
+Correct
+
+Correct answer
+webserver.mydomain.com, dev.mydomain.com, www.mydomain.com
+
+25) True or False: The metaparameter notify implies "before" in terms of resource relationships.
+Correct
+
+Correct answer
+True
+
+26) In your data center, servers have either 16 GB or 64 GB of memory. You are writing a Puppet module to manage a system service and you want to use different command-line arguments depending on how much memory the machine has. Which three Puppet syntax constructs would you use to allow the behavior of your service resource to change?
+Correct
+
+Correct answer
+if statement, selector, case statement
+
+27) # File: Puppet Manifest host { 'sles11a': name => 'sles11a.puppetlabs.com', ip => '10.20.1.77', host_aliases => ['zypper'], } host { 'centos64c': ip => '10.20.1.74', } host { 'server2008r2b': ip => '10.20.1.80', comment => 'windows', } # File: Original /etc/hosts 127.0.0.1 localhost 10.20.1.62 sles11a zypper # primary mirror 10.20.1.74 centos64c # decomissioned 10.20.1.80 server2008r2b 10.20.1.77 sles11a.puppetlabs.com After using Puppet to apply the manifest shown above, which two entries in the /etc/hosts file will remain unchanged?
+Correct
+
+Correct answer
+10.20.1.62 sles11a zypper # primary mirror, 10.20.1.74 centos64c # decomissioned
+
+28) Which of the following commands would be used to generate an empty skeleton of directories required to create a new Puppet module?
+Correct
+
+Correct answer
+puppet module generate
+
+Explanation
+puppet module skel is not a valid puppet module sub option.
+
+29) The invent inspector, which is how Puppet manages configurations and what is happening when events occur, provides insights into our environment from what perspective?
+Correct
+
+Correct answer
+classes, nodes, resources
+
+30) # File: Puppet Manifest host { 'sles11a': name => 'sles11a.puppetlabs.com', ip => '10.20.1.77', host_aliases => ['zypper'], } host { 'centos64c': ip => '10.20.1.75', } host { 'server2008r2b': ip => '10.20.1.80', comment => 'windows', } # File: Original /etc/hosts 127.0.0.1 localhost 10.20.1.62 sles11a zypper # primary mirror 10.20.1.74 centos64c # decomissioned 10.20.1.80 server2008r2b 10.20.1.77 sles11a.puppetlabs.com What is the expected value of the resource with name of centos64c?
+Correct
+
+Correct answer
+10.20.1.75 centos64c # decomissioned
+
+31) During the Puppet Enterprise installation process, you are instructed to open the GUI install page. However, the page is non-responsive and does not load. What might you need to do in order to access the GUI installation guide?
+Correct
+
+Correct answer
+Ensure that port 3000 and 443 is open and accessible on the Puppet master
+
+32) $title = "my title" node /^webserver\d{1}.mylabserver.com$/ { $title = "new title" include ntp include apache } node "webserver01.mylabserver.com" { $title = "the title" include mysql include common } class mysql { $title = "mysql title" package { 'mysql-server': } } Given the above code, if $title is used within a class, what would the value of the variable be if the nodes certificate name is webserver01.mylabserver.com?
+Incorrect
+
+Correct answer
+mysql title
+
+33) The Puppet installation process fails due to a configuration error. How might you recover from the failed install?
+Incorrect
+
+Correct answer
+Fix the configuration issue and run ./puppet-enterprise-uninstaller
+
+34) Which of the following classes will be executed on the node "webserver01.mylabserver.com" based on the following code?: node /^webserver\d{01}.mylabserver.com$/ { include ntp include apache } node "webserver01.mylabserver.com" { include mysql include common }
+Correct
+
+Correct answer
+mysql, common
+
+Explanation
+Even though the certificate name is webserver, puppet first looks for exact node definition matches, then if the name does not match it will attempt to evaluate a regular expression.
+
+35) True or False: If a node matches multiple node definitions due to regular expressions, Puppet will use ONE of them with no guarantee as to which one it will use.
+Correct
+
+Correct answer
+True
+
+36) Which puppet module command will pepare a local module for release on the Puppet Forge by building a ready-to-upload archive file?
+Correct
+
+Correct answer
+puppet module build
+
+37) Which statement is true about classes?
+Correct
+
+Correct answer
+Classes are singleton and will only ever be evaluated once
+
+38) True or False: Metaparameters are parameters that work with any resource type.
+Correct
+
+Correct answer
+True
+
+Explanation
+Metaparameters are parameters that work with any resource type and are part of the Puppet core.
+
+39) True or False: The following statement is a valid/legal statement in Puppet code. package { ‘resource-title’ : name => $::operatingsystem ? { ‘redhat’ => $::memory ? { 512 => 'httpd', 128 => 'http', } ‘debian’ => ‘apache2’, }, ensure => installed, }
+Incorrect
+
+Correct answer
+False
+
+Explanation
+Selector expressions cannot be used within the "case" of another selector statement
+
+40) class var_test { $osfamily = "test" notify { 'test': message => $osfamily, } notify { 'test': message => $::osfamily, } } Given the following code, what type of error will result when puppet parser validate is run?
+Correct
+
+Correct answer
+Puppet parser will not report any errors
+
+Explanation
+var_test is an acceptable class name, class names can have underscores but MUST start with a lowercase letter. osfamily is local scope and can be reassigned since facts are top scope $::factname. An error will occur when the catalog is being compiled due to two resource titles having the same name. However, puppet parser will not catch those errors because puppet parser validates for syntax only.
+
+41) You are managing a system with a modulepath of /etc/puppetlabs/puppet/modules. In which file will the autoloader look for the class definition for the ssh::server::keys class?
+Correct
+
+Correct answer
+/etc/puppetlabs/puppet/modules/ssh/manifests/server/keys.pp
+
+42) exec { "echo tests >> /etc/motd": path => "/bin", } The above Puppet code is not idempotent. True or False: It is possible using exec attributes to make it idempotent.
+Correct
+
+Correct answer
+True
+
+43) You want to publish a module to the Puppet Forge. Which file is required?
+Correct
+
+Correct answer
+Modulefile
+
+44) What happens if a class has not been declared using the include or class options, but the class is inherited by another class? i.e.: class ntp inherits ntp::params { }
+Correct
+
+Correct answer
+If the class is not declared it will then be delcared
+
+45) What evaluation operator would you use to evaluate a regular expression?
+Correct
+
+Correct answer
+=~
+
+46) Which of the following is true in terms of live management resource browsing and the insights it provides into the state of an infrastructure managed with Puppet? Live management provides you with:
+Correct
+
+Correct answer
+Varation reports that can be generated on the fly, Instant visibility into the state of the resources on all nodes, The ability to quickly filter and browse to find the information you need
+
+47) You want to use live management to trigger a Puppet agent run only on nodes running Red Hat Enterprise Linux and its derivatives. How do you proceed?
+Incorrect
+
+Correct answer
+Use the advanced filter to filter by facts for osfamily, with a value of RedHat, and trigger a run using the Control Puppet section of live management.
+
+48) True or False: When installing the Puppet master and Console on separate servers, installing the console before the Puppet master could cause Puppet master installation to fail.
+Correct
+
+Correct answer
+True
+
+49) If the operating system of the node is SUSE what would you expect to happen given the following code: package { ‘resource-title’ : name => $::operatingsystem ? { ‘redhat’ => ‘httpd’, ‘debian’ => ‘apache2’, }, ensure => installed, }
+Correct
+
+Correct answer
+The compile would fail because no default match was provided
+
+50) From where does a Puppet agent run start?
+Correct
+
+Correct answer
+The node being managed
+
+51) How many lookup functions does Hiera have?
+Correct
+
+Correct answer
+3
+
+52) Given the following code and a node running the environment name "dev", certificate name of webserver01.mylabserver.com, and osfamily redhat. What will the URL value be?: $confdir/hiera.yaml file -- :backends: - yaml :yaml: :datadir: /etc/puppet/hieradata :hierarchy: - "%{::osfamily}" - “%{certname}" - "%{environment}" - common Given the following Hiera data #common.yaml url: www.mydomain.com #dev.yaml url: dev.mydomain.com #production.yaml url: mydomain.com #webserver01.yaml url: webserver.mydomain.com #redhat.yaml url: redhat.mydomain.com class show_url { $url = hiera_array('url') }
+Correct
+
+Correct answer
+redhat.mydomain.com, webserver.mydomain.com,dev.mydomain.com,www.mydomain.com
+
+53) True or False: Selector expressions can be used within a case statements case.
+Correct
+
+Correct answer
+False
+
+54) Given the following code, what key should be added to the YAML data source in order for automatic parameter lookup to apply to this class?: class ntp ($ntp = "default") { }
+Correct
+
+Correct answer
+ntp::ntp: server.com
+
+55) If refreshonly is set to true, the exec will only run when it receives an event. This is the most reliable way to use refresh with execs.
+Correct
+
+Correct answer
+True
+
+56) If there is a file resource type with the same resource title/name declared twice, what will puppet parser output when run, given the following code?: file { 'demo': ensure => file, path => '/home/user/test', } file { 'demo': ensure => file, path => '/home/user/tests', }
+Correct
+
+Correct answer
+Puppet parser will not error because this is not a syntax error
+
+57) With regard to node classification, what is the agent's node name by default?
+Correct
+
+Correct answer
+certname
+
+58) Which attribute that belongs to the exec resource type makes it idempotent?
+Correct
+
+Correct answer
+unless
+
+59) Which of the following are valid parameters for the puppet module install command?
+Correct
+
+Correct answer
+--version, --modulepath
+
+60) Where are functions executed? Hint: think about the catalog compiling process.
+Correct
+
+Correct answer
+On the Puppet master
+
+61) True or False: The Puppet master and Console can be installed on separate servers.
+Correct
+
+Correct answer
+True
+
+62) Which three are included in a Puppet agent run report?
+Correct
+
+Correct answer
+The total number of resources managed, The time taken to retrieve the configuration, The number of resources changed
+
+63) class var_test::test { $myvar = "test" } class var_test { include var_test::test $osfamily = "test" notify { 'test1': message => "this is the test, {$myvar}", } } Given the above code, what would you expect the notify message to output during the puppet run? Hint: This question is focused on scope and what the variable should be since we used the include function.
+Incorrect
+
+Correct answer
+this is the test, {}
+
+Explanation
+The include function does not imply scope. It only "declares" the class, the $myvar variable is still out of scope and could only be used through inheritance or $var_test::test::myvar variable name calling the scope of the variable.
+
+64) Given the following Puppet code what value would you expect $server to have when executed in the notify resource?: node "webserver.mylabserver.com" { $server = "10.0.0.1" class { 'ntp' : server = "10.0.0.2", } } class ntp ($server = "localhost") { notify ("The value of the server variable is ${server}":) }
+Correct
+
+Correct answer
+10.0.0.2
+
+65) It is 12:05 am. Given the following resource type definition what would you expect to happen during the 12:05 Puppet agent run?: schedule { 'maint': range => "2 - 4", period => daily, repeat => 1, } exec { 'yum update -y': schedule => 'maint', }
+Correct
+
+Correct answer
+The yum update -y would not be executed on the system
+
+66) True or False: The exec resource type by default is idempotent.
+Correct
+
+Correct answer
+False
+
+67) Which of the following classes will be executed on the node "webserver01.mylabserver.com" based on the below code?: node /^webservers\d{1}.mylabserver.com$/ { include ntp include apache } node "webserver01.mylabserver" { include mysql include common } default { include core }
+Correct
+
+Correct answer
+mysql, common
+
+Explanation
+First Puppet looks for an exact match, then puppet looks for a regular expression match, then if the cert name looks like a FQDN Puppet will look for a definition without the .com (extension depends on the fqdn webserver01.mylabserver), and only then if there are no matches will Puppet go to default.
+
+68) What information does PuppetDB contain?
+Incorrect
+
+Correct answer
+The most recent facts from every node, The most recent catalog for every node
+
+69) Given the following information, what classes would you expect to be declared on the node? : certname "webserver1.mylabserver.com" node /^webserver\d{1}.mylabserver.net$/ { include roles::webserver } node /^webserver\d{1}.mylabserver$/ { include roles::apache } node "webserver1.mylabserver" { include roles::apache } node "webserver1" { include roles::nginx } node default { include base }
+Correct
+
+Correct answer
+roles::apache
+
+70) Best practice is to always include a default match when using conditional expressions
+Correct
+
+Correct answer
+True
+
+71) Given the following code and a node running the environment name "dev" and a hostname of webserver01.mylabserver.com what will the URL value be?: $confdir/hiera.yaml file -- :backends: - yaml :yaml: :datadir: /etc/puppet/hieradata :hierarchy: - “%{certname}" - common Given the following Hiera data #common.yaml url: www.mydomain.com #dev.yaml url: dev.mydomain.com #production.yaml url: mydomain.com #webserver01.mylabserver.com.yaml url: webserver.mydomain.com class show_url { $url = hiera('url') }
+Correct
+
+Correct answer
+webserver.mydomain.com
+
+72) What is the expected result of this code? package { 'ntp': ensure => 'present', } service { 'ntpd': ensure => running, enable => true, require => package['ntp'], }
+Correct
+
+Correct answer
+Error because the require metaparameter has incorrect syntax
+
+Explanation
+When referencing a resource managed by Puppet you must always use a capital to reference the title. Package['ntp'] instead of package['ntp']
+
+73) Given the following Puppet code what value would you expect $server to have when executed in the notify resource?: node "webserver.mylabserver.com" { $server = "10.0.0.1" class { 'ntp' : } } class ntp ($server) { notify ("The value of the server variable is ${server}":) }
+Correct
+
+Correct answer
+Compile error due to defining a parameter and it not having a value
+
+74) Which of the following is true?
+Correct
+
+Correct answer
+Class names cannot start with an underscore but variables can, Class names can include numbers but cannot start with a number, while a variable can start with a number and include numbers
+
+75) Which metaparameter, when applied to a Puppet resource type, would cause the resource type to be ignored?
+Correct
+
+Correct answer
+noop
+
+76) If webserver01 is classified both inside a node group on the console and within site.pp, given the following configurations, what would you expect the output to be for a Puppet agent run? : #Node group console configuration $variable = "hello world" #site.pp standard node definition $variable = "Linux Academy" node "webserver01.mylabserver.com" { } #end site.pp definition
+Correct
+
+Correct answer
+compiling error due to reassigning variables at the same scope level
+
+77) What are two ways to access the value of the ipaddress fact inside a manifest?
+Correct
+
+Correct answer
+$ipaddress, $::ipaddress
+
+78) You've noticed an increase in the number of background tasks left inside the Puppet Enterprise console. This caused because a background task might have died and left invalid PID files. How might you resolve this issue?
+Correct
+
+Correct answer
+Restart the pe-puppet-dashboard-workers service
+
+79) Which two actions does a puppet agent command complete?
+Incorrect
+
+Correct answer
+Send a report to the Puppet master., Ensure presence of agent's private key.
+
+80) Which of the following commands will display all installed modules from the Puppet Forge?
+Correct
+
+Correct answer
+puppet module list
+
+81) Which of the following are metaparameter types?
+Partially Correct
+
+Correct answer
+notify, schedule
+
+82) Which statement is correct about Puppet Enterprise event inspector?
+Correct
+
+Correct answer
+It displays events from a class and resource perspective
+
+83) The node running Puppet agent has a fact osfamily with the value of Redhat: $familyvar = "redhat" node /^webserver\d{1}.mylabserver.com$/ { $familyvar = "debian" include ntp include apache } node "webserver01.mylabserver.com" { $familyvar = "centos" include mysql include common } class mysql { $familyvar = "debian" notify { "the os family is ${::familyvar}": } } Given the above code, what variable value will be displayed in the notify resource if the node's certificate name is webserver01.mylabserver.com?
+Incorrect
+
+Correct answer
+redhat
+
+84) When using Facter, which parameter will load additional facts distributed by Puppet?
+Correct
+
+Correct answer
+facter -p
+
+85) After installing the Puppet master you discover that none of your nodes can successfully communicate with the Puppet master. What are some steps you should take to troubleshoot the issue?
+Correct
+
+Correct answer
+Ensure the correct ports are open: 8140 (For Puppet Requests), 443 (For console access), 61613 (For orchestration requests), Ensure the Puppet master service is started and running, Check puppet cert list --all and ensure that each node has had the certificate signed
+
+86) Resource titles in Puppet classes are case sensitive.
+Correct
+
+Correct answer
+True
+
+87) Which of the following are parameters that can be passed to the puppet module install command?
+Partially Correct
+
+Correct answer
+--force, --environment, --debug
+
+88) True or False: Classes must first be added to the enterprise console before they can be assigned to a node.
+Incorrect
+
+Correct answer
+True
+
+89) Which attribute that belongs to the exec resource type makes it idempotent?
+Correct
+
+Correct answer
+refreshonly
+
+90) What configuration file is used to configure Puppet report processors, such as sending reports to Twitter?
+Correct
+
+Correct answer
+puppet.conf
+
+91) When deactivating an enterprise Puppet agent, the command [~$] puppet node deactivate does what?
+Incorrect
+
+Correct answer
+Removes the node from PuppetDB and frees up a license
+
+92) By default the parameter for pruning old data is set to 30 days. To change this what parameter name would you change?
+Correct
+
+Correct answer
+prune_upto
+
+93) Which of the following are acceptable class names?
+Correct
+
+Correct answer
+var_test
+
+Explanation
+Main and Settings are reserved in the Puppet core because of Puppet core classes that already consist of those names. A class name and module name MUST start with lower case letters. Class names, module names, and variables can all have underscores.
+
+94) Which of the following are not built-in report processors with Puppet?
+Correct
+
+Correct answer
+IRC
+
+Explanation
+Report processors are used in conjunction with the report setting in the puppet.conf file. Report processors take the YAML report that includes every log message that was generated during the transaction along with any metrics Puppet knows how to collect. The report processors determine how and where the reports should be routed when reporting is enabled. The reports setting used with the report processors is set on the Puppet masters puppet.conf file. reports = http, tagmail The report setting is different than the reports setting. The report setting determines if the agent is to send reporting information and is configured in the agent section of the agents puppet.conf file. More details of the reporting feature can be found in the Puppet documentation: https://docs.puppetlabs.com/references/latest/configuration.html#reports
+
+95) You have a Puppet node with the node name of "node1.mylabserver.com". This node has been destroyed and rebuilt and puppet agent has been run again for the first time. However, the following error is prompted during the first puppet agent run. "Error: Could not request certificate: The certificate retrieved from the master does not match the agent's private key." What might be the issue, and how would you solve it?
+Correct
+
+Correct answer
+Run puppet cert clean node1.mylabserver.com and then run puppet agent again
+
+96) Puppet resource relationships are enforced by:
+Correct
+
+Correct answer
+Applicable dependencies between resources in the manifests code
+
+97) Which command would you use on the Puppet master to view all signed certificates?
+Incorrect
+
+Correct answer
+puppet cert list -a, puppet cert list --all
+
+98) Your console database size is increasing over a short period of time because new reports are being generated by recently added nodes. You determine that you have adequate storage space for up to one month of reports. What should you do to reduce the space required to store reports?
+Correct
+
+Correct answer
+Use the reports:prune task in the console's Rake API to clean reports older than 30 days.
+
+99) The PostgreSQL database is becoming large and causing the console to act slow. What might be a cause of this? (Select the best possible answer.)
+Incorrect
+
+Correct answer
+The autovacuum PostgreSQL setting has been changed from on to off
+
+100) The event inspector, which is not populated in real time, reports on data stored in the...?
+Correct
+
+Correct answer
+PuppetDB
+
+101) Given the variable assignment shown below: $vhost_file = template("${module_name}/vhost.erb") What is providing the value of the local $vhost_file variable?
+Correct
+
+Correct answer
+The template function
+
+102) Which of the following is true about module AND class names?
+Correct
+
+Correct answer
+Must begin with a lowercase letter, Can include numbers and underscores but not start with them
+
+103) Which of the following are type of events found in the event inspector?
+Incorrect
+
+Correct answer
+Skipped: a requirement for this resource was not met. Thus Puppet does not compare its current state to the desired state. This will occur when the schedule metaparemter is set and the time interval does not meet the requirements or it is a general failure of the resource type being enforced, No-op: property was out of sync but Puppet was instructed not to make changes to the property
+
+Explanation
+Skipped, change, no-op, and failure are the change event types found in the event inspector.
+
+104) Given the following code and a node running the environment name "dev" and a hostname of webserver01.mylabserver.com what will the URL value be?: $confdir/hiera.yaml file -- :backends: - yaml :yaml: :datadir: /etc/puppet/hieradata :hierarchy: - “%{::environment}" - “%{::certname}" - common Given the following Hiera data #common.yaml url: www.mydomain.com #dev.yaml url: dev.mydomain.com #production.yaml url: mydomain.com #webserver01.yaml url: webserver.mydomain.com class show_url { $url = hiera('url') }
+Correct
+
+Correct answer
+dev.mydomain.com
+
+105) True or False: Resource Collectors can only search on attributes which are present in the manifests and cannot read the state of the target system.
+Incorrect
+
+Correct answer
+True
+
+106) $title = "my title" node /^webserver\d{1}.mylabserver.com$/ { $title = "new title" include ntp include apache } node "webserver01.mylabserver.com" { $title = "the title" include mysql include common } Given the above code, if $title is used within a class, what would the value of the variable be if the node's certificate name is webserver01.mylabserver.com?
+Correct
+
+Correct answer
+the title
+
+107) True or False: The event inspector will fetch the data once while loading and use the same data until it is closed or the data is reloaded.
+Correct
+
+Correct answer
+True
+
+108) The Puppet master event inspector is reporting a "change" event on the httpd package resource type in your Puppet module. What most likely has occurred with the resource type?
+Correct
+
+Correct answer
+The httpd configuration was incorrect and the Puppet configuration updated the correct configuration
+
+Explanation
+A change event occurs when a property is out-of-sync and Puppet made a change to enforce the desired configuration and put the property in the desired state
+
+109) Which attribute that belongs to the exec resource type makes it idempotent?
+Correct
+
+Correct answer
+onlyif
+
+110) Given the following code, what is the expected result?: file { 'demo': ensure => file, path => '/home/user/test', } package { 'demo': name => 'httpd', }
+Correct
+
+Correct answer
+Compiling is successful since the duplicate resource names apply on different resource types
+
+111) Which of the following are Hiera lookup functions?
+Correct
+
+Correct answer
+hiera, hiera_array, hiera_hash
+
+112) In Puppet Enterprise, what is the location of the SSL directory?
+Partially Correct
+
+Correct answer
+/etc/puppetlabs/puppet/ssl, puppet master —configprint ssldir
+
+113) In order to connect the Puppet master to an external node classifier which two settings are required in the [main] section of puppet.conf?
+Incorrect
+
+Correct answer
+node_terminus, external_nodes
+
+114) Which of the following commands will show what files that belong to a Puppet Forge module have been modified since the module's installation?
+Correct
+
+Correct answer
+puppet module changes
+
+115) Reports available form within the console, provide which of the following information?
+Correct
+
+Correct answer
+Total number of resources managed, Total number of resources changed for each run, Runtime for the puppet agent run
+
+116) What is the location of the answer file created by the Puppet Enterprise installer?
+Correct
+
+Correct answer
+/opt/puppet/share/installer/answers
+
+117) If the exec command already ran and receives a refresh event, it will run again as long as idempotent attributes don't restrict the conditions making it so that the exec command can run up to two times.
+Correct
+
+Correct answer
+True
+
+118) In what class is the prune_upto parameter located for setting the pruning database cronjob?
+Correct
+
+Correct answer
+pe_console_prune
+
+Explanation
+The module name is puppetlabs-pe_console_prune but the specific class name that contains the parameter is pe_console_prune
+
+119) Given the following resource type definition, what is suppose to occur during Puppet enforcement?: file { '/etc/motd': path => '/etc/motd.txt', source => 'puppet:///modules/motd/motd', } Note: The assumption on this question is that the file on the system does not match the contents of the file on the Puppet master and a Puppet enforcement WILL occur.
+Correct
+
+Correct answer
+The /etc/motd.txt file will be replaced with the motd file located in the modules/motd/files/ directory by the file named motd
+
+120) True or False: Variables assigned to a node group within the console are considered top scope variables.
+Correct
+
+Correct answer
+True
+
+121) You want to trigger the restart of a service after a configuration file is changed during a Puppet enforcement run. Which resource metaparameter should you use?
+Correct
+
+Correct answer
+notify
+
+122) The node running Puppet agent has a fact osfamily with the value of Redhat: node /^webserver\d{1}.mylabserver.com$/ { $osfamily = "debian" include ntp include apache } node "webserver01.mylabserver.com" { $osfamily = "centos" include mysql include common } class mysql { $osfamily = "debian" notify { "the os family is ${osfamily}": } } Given the above code, what variable value will be displayed in the notify resource if the node's certificate name is webserver01.mylabserver.com?
+Correct
+
+Correct answer
+debian
+
+123) Given the following Puppet code, what would you expect to happen? exec { "echo tests1 >> /etc/motd": path => "/bin:/usr/bin", onlyif => "test -f /etc/motd`", }
+Correct
+
+Correct answer
+tests1 will be appended to the /etc/motd file only if the /etc/motd file exists, making the exec resource idempotent
+
+124) if the onlyif attribute is set, then the exec will only run if the command associated to the onlyif attribute has an exit code of 0
+Incorrect
+
+Correct answer
+True
+
+125) Given the following Puppet code, what would you expect to happen? exec { "echo tests >> /etc/motd": path => "/bin:/usr/bin", creates => "/etc/motd`", }
+Correct
+
+Correct answer
+Makes the exec command idempotent and only writes/creates tests to the motd file if the /etc/motd file does not exist
+
+126) Which class will be executed on the node with the certname "webserver.mylabserver.com", given the below code?: node "webserver.mylabserver.com" { include apache } node "webserver.mylabserver" { include nginx } node "webserver" { include varnish } default { include base }
+Correct
+
+Correct answer
+apache
+
+127) $title = "my title" node /^webserver\d{1}.mylabserver.com$/ { $title = "new title" include ntp include apache } node "webserver01.mylabserver.com" { $title = "the title" include mysql include common } class mysql { $title = "mysql title" notify { "The variable name is ${::title}": } } Given the above code, what variable value will be displayed in the notify resource if the node's certificate name is webserver01.mylabserver.com?
+Incorrect
+
+Correct answer
+my title
+
+128) Which of the following is an acceptable variable name?
+Correct
+
+Correct answer
+$_server, $12server, $server
+
+129) True or False: If site.pp contains at least one node definition, it must have one for every node; compilation for a node will fail if one cannot be found.
+Correct
+
+Correct answer
+True
+
+130) You have noticed in your Puppet Enterprise console that there are several pending background tasks growing incrementally. You discover that there are several processes with stale PIDs due to a background task that recently died. You have removed the stale PIDs and there has not been any change within the console. What is a valid command to restart the service responsible for the background tasks?
+Correct
+
+Correct answer
+service pe-puppet-dashboard-workers restart
+
+131) The resource type exec has the ability to listen for relationship notifications such as subscribe and notify.
+Correct
+
+Correct answer
+True
+
+132) Which attribute that belongs to the exec resource type makes it idempotent?
+Correct
+
+Correct answer
+creates, onlyif
+
+133) Which of the following puppet module commands will create a boiler plate template for new modules?
+Correct
+
+Correct answer
+puppet module generate
+
+Retake Quiz 
